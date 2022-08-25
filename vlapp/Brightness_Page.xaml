@@ -12,14 +12,16 @@
         
     <materialDesign:DialogHost x:Name="popup_BrightnessChange" BorderBrush="{DynamicResource MaterialDesignDivider}" HorizontalAlignment="Center" VerticalAlignment="Top">
         <materialDesign:DialogHost.DialogContent >
-            <Grid Width="345" Height="350">
+            <Grid Width="345" Height="430">
                 <StackPanel Orientation="Vertical">
                         <StackPanel Margin="15" Orientation="Horizontal">
                             <materialDesign:Chip x:Name="txt_BlindNumber_popup" FontSize="15" FontWeight="Bold" Content="Blind ID: " />
                             <materialDesign:Chip x:Name="txt_ModuleNumber_popup" FontSize="15" FontWeight="Bold" Content="Module Number: " />
                         </StackPanel>
                         <StackPanel>
-                            <TextBlock x:Name="txt_popup_red" FontWeight="Bold" Text="Red: 0" FontSize="15" Margin="15 15 0 0" />
+                        <TextBlock x:Name="txt_popup_all" FontWeight="Bold" Text="Current gain: 0" FontSize="15" Margin="15 15 0 0" />
+                        <Slider x:Name="slider_popup_all" Minimum="0" Maximum="100" TickFrequency="10" TickPlacement="BottomRight" Margin="15" ValueChanged="slider_popup_all_ValueChanged"   />
+                        <TextBlock x:Name="txt_popup_red" FontWeight="Bold" Text="Red: 0" FontSize="15" Margin="15 0 0 0" />
                             <Slider x:Name="slider_popup_red" Minimum="0" Maximum="100" TickFrequency="10" TickPlacement="BottomRight" Margin="15" ValueChanged="slider_popup_red_ValueChanged"  />
                             <TextBlock x:Name="txt_popup_green" FontWeight="Bold" Text="Green: 0" FontSize="15" Margin="15 0 0 0" />
                             <Slider x:Name="slider_popup_green" Minimum="0" Maximum="100" TickFrequency="10" TickPlacement="BottomRight" Margin="15" ValueChanged="slider_popup_green_ValueChanged"  />
@@ -117,7 +119,9 @@
                 <StackPanel>
                     <TextBlock Text="Blind 1" FontWeight="Bold" FontSize="25" HorizontalAlignment="Center" Margin="0 10 0 0"/>
                     
-                    <TextBlock x:Name="txtb1_red" FontWeight="Bold" Text="Red: 0" FontSize="15" Margin="15 15 0 0" />
+                    <TextBlock x:Name="txtb1_all" FontWeight="Bold" Text="Current gain: 0" FontSize="15" Margin="15 15 0 0" />
+                    <Slider x:Name="sliderb1_all" Minimum="0" Maximum="100" TickFrequency="10" TickPlacement="BottomRight" Margin="15" ValueChanged="sliderb1_all_ValueChanged" />
+                    <TextBlock x:Name="txtb1_red" FontWeight="Bold" Text="Red: 0" FontSize="15" Margin="15 0 0 0" />
                     <Slider x:Name="sliderb1_red" Minimum="0" Maximum="100" TickFrequency="10" TickPlacement="BottomRight" Margin="15" ValueChanged="sliderb1_red_ValueChanged" />
                     <TextBlock x:Name="txtb1_green" FontWeight="Bold" Text="Green: 0" FontSize="15" Margin="15 0 0 0" />
                     <Slider x:Name="sliderb1_green" Minimum="0" Maximum="100" TickFrequency="10" TickPlacement="BottomRight" Margin="15" ValueChanged="sliderb1_green_ValueChanged" />
@@ -152,7 +156,10 @@
                 <Border x:Name="blind_2" Grid.Row="2" Grid.Column="1" BorderBrush="black" BorderThickness="0 1 1 0" CornerRadius="10" IsEnabled="False" >
                 <StackPanel>
                     <TextBlock Text="Blind 2" FontWeight="Bold" FontSize="25" HorizontalAlignment="Center" Margin="0 10 0 0"/>
-                    <TextBlock x:Name="txtb2_red" FontWeight="Bold" Text="Red: 0" FontSize="15" Margin="15 15 0 0" />
+                    
+                    <TextBlock x:Name="txtb2_all" FontWeight="Bold" Text="Current gain: 0" FontSize="15" Margin="15 15 0 0" />
+                    <Slider x:Name="sliderb2_all" Minimum="0" Maximum="100" TickFrequency="10" TickPlacement="BottomRight" Margin="15" ValueChanged="sliderb2_all_ValueChanged" />
+                    <TextBlock x:Name="txtb2_red" FontWeight="Bold" Text="Red: 0" FontSize="15" Margin="15 0 0 0" />
                     <Slider x:Name="sliderb2_red" Minimum="0" Maximum="100" TickFrequency="10" TickPlacement="BottomRight" Margin="15" ValueChanged="sliderb2_red_ValueChanged" />
                     <TextBlock x:Name="txtb2_green" FontWeight="Bold" Text="Green: 0" FontSize="15" Margin="15 0 0 0" />
                     <Slider x:Name="sliderb2_green" Minimum="0" Maximum="100" TickFrequency="10" TickPlacement="BottomRight" Margin="15" ValueChanged="sliderb2_green_ValueChanged" />
@@ -188,7 +195,10 @@
                 <Border x:Name="blind_3" Grid.Row="2" Grid.Column="2" BorderBrush="black" BorderThickness="0 1 1 0" CornerRadius="10" IsEnabled="False" >
                 <StackPanel>
                     <TextBlock Text="Blind 3" FontWeight="Bold" FontSize="25" HorizontalAlignment="Center" Margin="0 10 0 0"/>
-                    <TextBlock x:Name="txtb3_red" FontWeight="Bold" Text="Red: 0" FontSize="15" Margin="15 15 0 0" />
+                    
+                    <TextBlock x:Name="txtb3_all" FontWeight="Bold" Text="Current gain: 0" FontSize="15" Margin="15 15 0 0" />
+                    <Slider x:Name="sliderb3_all" Minimum="0" Maximum="100" TickFrequency="10" TickPlacement="BottomRight" Margin="15" ValueChanged="sliderb3_all_ValueChanged"/>
+                    <TextBlock x:Name="txtb3_red" FontWeight="Bold" Text="Red: 0" FontSize="15" Margin="15 0 0 0" />
                     <Slider x:Name="sliderb3_red" Minimum="0" Maximum="100" TickFrequency="10" TickPlacement="BottomRight" Margin="15" ValueChanged="sliderb3_red_ValueChanged" />
                     <TextBlock x:Name="txtb3_green" FontWeight="Bold" Text="Green: 0" FontSize="15" Margin="15 0 0 0" />
                     <Slider x:Name="sliderb3_green" Minimum="0" Maximum="100" TickFrequency="10" TickPlacement="BottomRight" Margin="15" ValueChanged="sliderb3_green_ValueChanged" />
@@ -225,7 +235,10 @@
                 <Border x:Name="blind_4" Grid.Row="2" Grid.Column="3" BorderBrush="black" BorderThickness="0 1 1 1" CornerRadius="10" IsEnabled="False">
                 <StackPanel>
                     <TextBlock Text="Blind 4" FontWeight="Bold" FontSize="25" HorizontalAlignment="Center" Margin="0 10 0 0"/>
-                    <TextBlock x:Name="txtb4_red" FontWeight="Bold" Text="Red: 0" FontSize="15" Margin="15 15 0 0" />
+                    
+                    <TextBlock x:Name="txtb4_all" FontWeight="Bold" Text="Current gain: 0" FontSize="15" Margin="15 15 0 0" />
+                    <Slider x:Name="sliderb4_all" Minimum="0" Maximum="100" TickFrequency="10" TickPlacement="BottomRight" Margin="15" ValueChanged="sliderb4_all_ValueChanged" />
+                    <TextBlock x:Name="txtb4_red" FontWeight="Bold" Text="Red: 0" FontSize="15" Margin="15 0 0 0" />
                     <Slider x:Name="sliderb4_red" Minimum="0" Maximum="100" TickFrequency="10" TickPlacement="BottomRight" Margin="15" ValueChanged="sliderb4_red_ValueChanged" />
                     <TextBlock x:Name="txtb4_green" FontWeight="Bold" Text="Green: 0" FontSize="15" Margin="15 0 0 0" />
                     <Slider x:Name="sliderb4_green" Minimum="0" Maximum="100" TickFrequency="10" TickPlacement="BottomRight" Margin="15" ValueChanged="sliderb4_green_ValueChanged" />

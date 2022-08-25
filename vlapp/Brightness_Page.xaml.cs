@@ -48,6 +48,14 @@ namespace vlapp
             //    btn_Refresh.Visibility = Visibility.Collapsed;
             //}
         }
+
+        //blind 1
+        private void sliderb1_all_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            int value = Convert.ToInt32(sliderb1_all.Value);
+            txtb1_all.Text = "Current gain: " + value;
+        }
+
         private void sliderb1_red_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             int value = Convert.ToInt32(sliderb1_red.Value);
@@ -64,6 +72,13 @@ namespace vlapp
         {
             int value = Convert.ToInt32(sliderb1_blue.Value);
             txtb1_blue.Text = "Blue: " + value;
+        }
+
+        //blind 2
+        private void sliderb2_all_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            int value = Convert.ToInt32(sliderb2_all.Value);
+            txtb2_all.Text = "Current gain: " + value;
         }
 
         private void sliderb2_red_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -84,6 +99,13 @@ namespace vlapp
             txtb2_blue.Text = "Blue: " + value;
         }
 
+        //blind 3
+        private void sliderb3_all_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            int value = Convert.ToInt32(sliderb3_all.Value);
+            txtb3_all.Text = "Current gain: " + value;
+        }
+
         private void sliderb3_red_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             int value = Convert.ToInt32(sliderb3_red.Value);
@@ -100,6 +122,13 @@ namespace vlapp
         {
             int value = Convert.ToInt32(sliderb3_blue.Value);
             txtb3_blue.Text = "Blue: " + value;
+        }
+
+        //blind 4
+        private void sliderb4_all_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            int value = Convert.ToInt32(sliderb4_all.Value);
+            txtb4_all.Text = "Current gain: " + value;
         }
 
         private void sliderb4_red_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
@@ -120,6 +149,12 @@ namespace vlapp
             txtb4_blue.Text = "Blue: " + value;
         }
 
+        //pop up
+        private void slider_popup_all_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            int value = Convert.ToInt32(slider_popup_all.Value);
+            txt_popup_all.Text = "Current gain: " + value;
+        }
 
         private void slider_popup_red_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
@@ -238,7 +273,6 @@ namespace vlapp
             sliderb4_red.Value = 0;
         }
 
-
         private void btn_module1_Click_1(object sender, RoutedEventArgs e)
         {
             Button? btn = sender as Button;
@@ -282,6 +316,8 @@ namespace vlapp
                 }
             }
         }
+
+    
 
         private void btn_module3_Click(object sender, RoutedEventArgs e)
         {
