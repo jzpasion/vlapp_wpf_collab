@@ -42,13 +42,13 @@ namespace vlapp
                 case 0:
                     frame.Navigate(new Uri("Upload_Page.xaml", UriKind.RelativeOrAbsolute));
                     break;
+                //case 1:
+                //    frame.Navigate(new Uri("Collection_Page.xaml", UriKind.RelativeOrAbsolute));
+                //    break;
                 case 1:
-                    frame.Navigate(new Uri("Collection_Page.xaml", UriKind.RelativeOrAbsolute));
-                    break;
-                case 2:
                     frame.Navigate(new Uri("Arrangement_Page.xaml", UriKind.RelativeOrAbsolute));
                     break;
-                case 3:
+                case 2:
                     frame.Navigate(new Uri("Brightness_Page.xaml", UriKind.RelativeOrAbsolute));
                     break;
             }

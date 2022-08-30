@@ -23,8 +23,8 @@ namespace vlapp
     public partial class Brightness_Page : Page
     {
         ConnectionModel connection = new ConnectionModel();
-        ObservableCollection<BlindListItem> blindList;
-        BlindListItem? element;
+        ObservableCollection<NodeListItem> blindList;
+        NodeListItem? element;
         ModuleModel? ModuleElement;
         int index, moduleIndex , blindIDHolder;
         public Brightness_Page()
@@ -205,9 +205,9 @@ namespace vlapp
                 if (item != null)
                 {
                     index = this.listbox_arrange_ip.Items.IndexOf(item);
-                    element = (BlindListItem)this.listbox_arrange_ip.Items[index];
+                    element = (NodeListItem)this.listbox_arrange_ip.Items[index];
 
-                    txt_EspNumber.Content = "Selected Esp ID: "+element.BlindIndex.ToString();
+                    txt_EspNumber.Content = "Selected Esp ID: "+element.nodeIndex.ToString();
                     txt_BlindNumber.Content = "Number of blinds: "+ element.BlindNumber.ToString();
 
                     switch(element.BlindNumber)

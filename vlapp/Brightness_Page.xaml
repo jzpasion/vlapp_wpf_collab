@@ -93,7 +93,7 @@
                                             <Setter Property="HorizontalAlignment" Value="Center"/>
                                             <Setter Property="VerticalAlignment" Value="Center"/>
                                             <Setter Property="Foreground" Value="Black"/>
-                                            <Setter Property="Text" Value="{Binding BlindIndex}"/>
+                                                <Setter Property="Text" Value="{Binding nodeIndex}"/>
                                             <Setter Property="FontSize" Value="39" />
                                             <Setter Property="Margin" Value="15" />
                                         </Style>
@@ -131,7 +131,7 @@
                         Width="200"
                         Style="{StaticResource MaterialDesignRaisedLightButton}"
                         Margin="0 10 0 10"
-                        materialDesign:ButtonAssist.CornerRadius="5" Click="btn_save_blind1_brightness_Click">
+                        materialDesign:ButtonAssist.CornerRadius="5">
                             <TextBlock Text="Save" />
                         </Button>
                         <TextBlock Text="Modules" FontWeight="Bold" FontSize="25" HorizontalAlignment="Center" Margin="0 10 0 0"/>
@@ -170,7 +170,7 @@
                         Width="200"
                         Style="{StaticResource MaterialDesignRaisedLightButton}"
                         Margin="0 10 0 10"
-                        materialDesign:ButtonAssist.CornerRadius="5" Click="btn_save_blind2_brightness_Click">
+                        materialDesign:ButtonAssist.CornerRadius="5">
                             <TextBlock Text="Save" />
                         </Button>
                     
