@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-F:\lumi2022\github\vlapp_wpf_collab\vlapp\obj\Debug\net6.0-windows\
+C:\Users\Zyrel\Documents\Files\Projects\4. Lumi Blinds\WPF\vlapp_collab\vlapp_wpf_collab\vlapp\obj\Debug\net6.0-windows\
 vlapp
 none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
-F:\lumi2022\github\vlapp_wpf_collab\vlapp\App.xaml
+C:\Users\Zyrel\Documents\Files\Projects\4. Lumi Blinds\WPF\vlapp_collab\vlapp_wpf_collab\vlapp\App.xaml
 71805936027
 
-17-1369356121
-2021746870237
+191302184017
+210-387717325
 Arrangement_Page.xaml;Brightness_Page.xaml;Collection_Page.xaml;Control\CardList.xaml;Control\SideMenuControl.xaml;MainWindow.xaml;Upload_Page.xaml;
 
-False
+True
 
