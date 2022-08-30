@@ -15,7 +15,6 @@ namespace vlapp
                 return new List<MenuItemData>
                 {
                     new MenuItemData(){IsItemSelected= true , MenuText ="Videos" },
-                    new MenuItemData(){IsItemSelected= false , MenuText ="Schedule" },
                     new MenuItemData(){IsItemSelected= false , MenuText ="Arrangement" },
                     new MenuItemData(){IsItemSelected= false , MenuText ="Brightness" }
                 };

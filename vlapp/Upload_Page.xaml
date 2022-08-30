@@ -52,8 +52,9 @@
                                     SelectedDateChanged="date_fromDate_SelectedDateChanged"
                                     materialDesign:HintAssist.Hint="From Date"
                                     materialDesign:TextFieldAssist.HasClearButton="True"
-                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
-                                    />
+                                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}">
+                                </DatePicker>
+                               
                                 <!--<TextBlock Text="To " FontSize="15" FontWeight="Bold" Margin="25 20 5 0"/>-->
                                 <DatePicker
                                     x:Name="date_toDate"
@@ -79,7 +80,7 @@
                             materialDesign:HintAssist.Hint="From Time"/>
                             <!--<TextBlock Text="To "  FontSize="15" FontWeight="Bold" Margin="25 20 5 0"/>-->
                             <materialDesign:TimePicker
-                            x:Name="time_fromTo"
+                            x:Name="time_toTime"
                             Width="100" 
                                 Margin="25 0 5 0"
                                 Is24Hours="True"

@@ -50,7 +50,6 @@ namespace vlapp
             vList.Add(new VideoListItem() { id = 1, title = "1", tfrom = "1:30", tto = "1:30" });
             vList.Add(new VideoListItem() { id = 2, title = "3:23", tfrom = "3:23", tto = "2:12" });
             vList.Add(new VideoListItem() { id = 3, title = "1:12", tfrom = "1:12", tto = "2:23" });
-            vList.Add(new VideoListItem() { id = 4, title = "4:32", tfrom = "4:32", tto = "12:12" });
 
 
             return vList;
@@ -94,12 +93,36 @@ namespace vlapp
 
         private void btn_save_Click(object sender, RoutedEventArgs e)
         {
-            //txt_filename.Text = "";
-            //txt_path.Text = "";
-            //popup_message.IsOpen = false;
+            //if (date_fromDate.SelectedDate != null && date_toDate != null)
+            //{
+            //    if(time_fromTime.SelectedTime != null && time_toTime.SelectedTime != null)
+            //    {
+            //        dateChecker((DateTime)date_fromDate.SelectedDate, (DateTime)date_toDate.SelectedDate);
 
-            bool test = date_fromDate.SelectedDate.Value.Date < date_toDate.SelectedDate.Value.Date;
-            System.Diagnostics.Trace.WriteLine(test);
+            //        if (ResponseModel.Status == true)
+            //        {
+            //            MessageBox.Show("From Date Should Be Less Than To Date");
+            //            ResponseModel.Status = false;
+            //        }
+            //        else
+            //        {
+            //            txt_filename.Text = "";
+            //            txt_path.Text = "";
+            //            popup_message.IsOpen = false;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        MessageBox.Show("Please fill in fromTime/toTime");
+            //    }
+
+            //}
+            //else
+            //{
+            //    MessageBox.Show("Please fill in fromDate/toDate");
+            //}
+
+            System.Diagnostics.Trace.WriteLine(time_toTime.SelectedTime);
         }
 
         private void date_fromDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -109,16 +132,14 @@ namespace vlapp
             //System.Diagnostics.Trace.WriteLine(formatDate);
         }
 
-        private bool dateChecker( DateOnly fromDate, DateOnly toDate)
+        private void dateChecker( DateTime fromDate, DateTime toDate)
         {
-            bool checker = false;
+            ResponseModel.Status = false;
 
-            if(fromDate == toDate)
+            if(fromDate > toDate)
             {
-                checker = true;
+                ResponseModel.Status = true;
             }
-
-            return checker;
         }
     }
 }
