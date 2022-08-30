@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -93,9 +94,31 @@ namespace vlapp
 
         private void btn_save_Click(object sender, RoutedEventArgs e)
         {
-            txt_filename.Text = "";
-            txt_path.Text = "";
-            popup_message.IsOpen = false;
+            //txt_filename.Text = "";
+            //txt_path.Text = "";
+            //popup_message.IsOpen = false;
+
+            bool test = date_fromDate.SelectedDate.Value.Date < date_toDate.SelectedDate.Value.Date;
+            System.Diagnostics.Trace.WriteLine(test);
+        }
+
+        private void date_fromDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            //string formatDate = date_fromDate.SelectedDate.Value.ToString("MM-dd-yyyy");
+
+            //System.Diagnostics.Trace.WriteLine(formatDate);
+        }
+
+        private bool dateChecker( DateOnly fromDate, DateOnly toDate)
+        {
+            bool checker = false;
+
+            if(fromDate == toDate)
+            {
+                checker = true;
+            }
+
+            return checker;
         }
     }
 }
