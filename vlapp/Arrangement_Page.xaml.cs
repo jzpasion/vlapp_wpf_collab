@@ -25,8 +25,8 @@ namespace vlapp
     public partial class Arrangement_Page : Page
     {
         ConnectionModel connection = new ConnectionModel();
-        ObservableCollection<BlindListItem> blindList;
-        BlindListItem? element;
+        ObservableCollection<NodeListItem> blindList;
+        NodeListItem? element;
         int index;
 
         public Arrangement_Page()
@@ -74,9 +74,9 @@ namespace vlapp
                 if (item != null)
                 {
                     index = this.listbox_arrange_ip.Items.IndexOf(item);
-                    element = (BlindListItem)this.listbox_arrange_ip.Items[index];
+                    element = (NodeListItem)this.listbox_arrange_ip.Items[index];
 
-                    txt_currentPosition.Text = "Current: " + element.BlindIndex.ToString();
+                    txt_currentPosition.Text = "Current: " + element.nodeIndex.ToString();
                     popup_changeIndex.IsOpen = true;
 
 
@@ -100,12 +100,12 @@ namespace vlapp
             {
                 if(Convert.ToInt32(txt_toPosition.Text) <= blindList.Count())
                 {
-                    var tempItem = blindList.First(a => a.BlindIndex == Convert.ToByte(txt_toPosition.Text));
+                    var tempItem = blindList.First(a => a.nodeIndex == Convert.ToByte(txt_toPosition.Text));
 
                     byte tempIndex = (byte)blindList.IndexOf(tempItem);
 
-                    blindList[tempIndex].BlindIndex = Convert.ToByte(element.BlindIndex);
-                    blindList[index].BlindIndex = Convert.ToByte(txt_toPosition.Text);
+                    blindList[tempIndex].nodeIndex = Convert.ToByte(element.nodeIndex);
+                    blindList[index].nodeIndex = Convert.ToByte(txt_toPosition.Text);
 
 
                     this.listbox_arrange_ip.Items.Refresh();
@@ -123,7 +123,7 @@ namespace vlapp
         private void btn_Save_Arrangement_Click(object sender, RoutedEventArgs e)
         {
             connection.sendArrange(blindList);
-            blindList = new ObservableCollection<BlindListItem>(blindList.OrderBy(i => i.BlindIndex));
+            blindList = new ObservableCollection<NodeListItem>(blindList.OrderBy(i => i.nodeIndex));
             //DataContext = blindList;
             this.listbox_arrange_ip.Items.Refresh();
 

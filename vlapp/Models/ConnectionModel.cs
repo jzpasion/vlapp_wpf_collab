@@ -12,13 +12,13 @@ namespace vlapp.Models
     public class ConnectionModel
     {
 
-        public ObservableCollection<BlindListItem> bList = new ObservableCollection<BlindListItem>();
+        public ObservableCollection<NodeListItem> bList = new ObservableCollection<NodeListItem>();
         private Socket? _clientSocket;
         public bool receiveData { get; set; }
         public bool receievIP { get; set; }
         byte[] res = new byte[1];
         byte[] resData = new byte[255];
-        public BlindListItem[] ?BlindList;
+        public NodeListItem[] ?BlindList;
         private string ipadd = "192.168.1.48";
 
         public void Connect()
@@ -81,13 +81,13 @@ namespace vlapp.Models
             }
         }
 
-        public void sendArrange(ObservableCollection<BlindListItem> list)
+        public void sendArrange(ObservableCollection<NodeListItem> list)
         {
             int fBuffSize = (list.Count * 6) + 5;
             byte[] fileBuffer2 = new byte[fBuffSize];
 
             //sort 
-            list = new ObservableCollection<BlindListItem>(list.OrderBy(i => i.BlindIndex));
+            list = new ObservableCollection<NodeListItem>(list.OrderBy(i => i.nodeIndex));
             //Array.Sort(blindList, delegate (BlindListItem x, BlindListItem y) { return x.BlindIndex.CompareTo(y.BlindIndex); });
 
             fileBuffer2[0] = 2;
@@ -98,7 +98,7 @@ namespace vlapp.Models
             int buffAddr = 5;
             for (int v = 0; v < list.Count; v++)
             {
-                fileBuffer2[buffAddr] = list[v].BlindIndex;
+                fileBuffer2[buffAddr] = list[v].nodeIndex;
                 buffAddr++;
                 for (int t = 0; t < list[v].BlindIp.Length; t++)
                 {
@@ -187,7 +187,7 @@ namespace vlapp.Models
         private void initializeIpAddr(byte[] src)
         {
             int ipListSize = (src[0] - 1) / 6;
-            BlindList = new BlindListItem[ipListSize];
+            BlindList = new NodeListItem[ipListSize];
             int tempAddr = 1;
             for (int i = 0; i < ipListSize; i++)
             {
@@ -202,18 +202,18 @@ namespace vlapp.Models
                     tempAddr++;
                 }
 
-                BlindListItem item = new BlindListItem(lIndex, lBlindNum, lIpAddr);
+                NodeListItem item = new NodeListItem(lIndex, lBlindNum, lIpAddr);
                 BlindList[i] = item;
             }
 
             //sort 
-            Array.Sort(BlindList, delegate (BlindListItem x, BlindListItem y) { return x.BlindIndex.CompareTo(y.BlindIndex); });
+            Array.Sort(BlindList, delegate (NodeListItem x, NodeListItem y) { return x.nodeIndex.CompareTo(y.nodeIndex); });
             tempAddr = 0;
         }
 
-        public ObservableCollection<BlindListItem> GetBlindList()
+        public ObservableCollection<NodeListItem> GetBlindList()
         {
-            foreach (BlindListItem element in BlindList)
+            foreach (NodeListItem element in BlindList)
             {
                 bList.Add(element);
             }

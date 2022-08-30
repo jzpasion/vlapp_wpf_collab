@@ -131,7 +131,7 @@
                         Width="200"
                         Style="{StaticResource MaterialDesignRaisedLightButton}"
                         Margin="0 10 0 10"
-                        materialDesign:ButtonAssist.CornerRadius="5">
+                        materialDesign:ButtonAssist.CornerRadius="5" Click="btn_save_blind1_brightness_Click">
                             <TextBlock Text="Save" />
                         </Button>
                         <TextBlock Text="Modules" FontWeight="Bold" FontSize="25" HorizontalAlignment="Center" Margin="0 10 0 0"/>
@@ -170,7 +170,7 @@
                         Width="200"
                         Style="{StaticResource MaterialDesignRaisedLightButton}"
                         Margin="0 10 0 10"
-                        materialDesign:ButtonAssist.CornerRadius="5">
+                        materialDesign:ButtonAssist.CornerRadius="5" Click="btn_save_blind2_brightness_Click">
                             <TextBlock Text="Save" />
                         </Button>
                     

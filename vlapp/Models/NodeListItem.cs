@@ -10,18 +10,18 @@ using Dragablz;
 
 namespace vlapp.Models
 {
-    public class BlindListItem
+    public class NodeListItem
     {
 
-        public byte BlindIndex { get; set; }
+        public byte nodeIndex { get; set; }
 
         public byte[] BlindIp { get; set; }
 
         public byte BlindNumber { get; set; }
 
-        public BlindListItem(byte BlindIndex , byte BlindNumber , byte[] BlindIp)
+        public NodeListItem(byte BlindIndex , byte BlindNumber , byte[] BlindIp)
         {
-           this.BlindIndex = BlindIndex;
+           this.nodeIndex = BlindIndex;
            this.BlindIp = BlindIp;
            this.BlindNumber = BlindNumber;
         }   
