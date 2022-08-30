@@ -9,7 +9,7 @@ namespace vlapp.Control
 {
     internal class Database_Functions
     {
-        static MySqlConnection con;
+        public static MySqlConnection con;
         public static string connectDb() {
             try
             {
@@ -51,6 +51,14 @@ namespace vlapp.Control
             }
         }
 
+        MySqlDataReader excecuteQuery(string query) {
+            MySqlCommand command = new MySqlCommand(query, con);
+            MySqlDataReader reader;
+            openDb(con);
+            reader = command.ExecuteReader();
+            return reader;
+        }
+
         public string insertData(string tbl, string[] fields, string[] values) {
             if (fields.Length != values.Length)
             {
@@ -85,13 +93,7 @@ namespace vlapp.Control
                     }
                     sbQuery.Append(");");
 
-                    MySqlCommand command = new MySqlCommand(sbQuery.ToString(), con);
-                    MySqlDataReader reader;
-                    openDb(con);
-                    reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                    }
+                    MySqlDataReader reader = excecuteQuery(sbQuery.ToString());
                     closeDb(con);
                     return "successfully saved";
                 }
@@ -150,13 +152,7 @@ namespace vlapp.Control
                     }
                     sbQuery.Append(';');
 
-                    MySqlCommand command = new MySqlCommand(sbQuery.ToString(), con);
-                    MySqlDataReader reader;
-                    openDb(con);
-                    reader = command.ExecuteReader();
-                    while (reader.Read())
-                    {
-                    }
+                    MySqlDataReader reader = excecuteQuery(sbQuery.ToString());
                     closeDb(con);
                     return "updated successfully";
                 }
@@ -164,6 +160,155 @@ namespace vlapp.Control
                 {
                     return "updating failed";
                 }
+            }
+        }
+
+        public string deleteData(string tbl, string[] fCondition, string[] vCondition)
+        {
+            if (fCondition.Length != vCondition.Length)
+            {
+                return "condition field and condition values musbt be the same count";
+            }
+            else
+            {
+                try
+                {
+                    StringBuilder sbQuery = new StringBuilder();
+                    sbQuery.Append("DELETE ");
+                    sbQuery.Append(" FROM ");
+                    sbQuery.Append(tbl);
+                    sbQuery.Append(" WHERE ");
+                    for (int y = 0; y < fCondition.Length; y++)
+                    {
+                        sbQuery.Append('\u0060'); //GRAVE ACCENT 
+                        sbQuery.Append(fCondition[y]);
+                        sbQuery.Append('\u0060'); //GRAVE ACCENT 
+                        sbQuery.Append(" = ");
+                        sbQuery.Append('\u0022'); //qutation
+                        sbQuery.Append(vCondition[y]);
+                        sbQuery.Append('\u0022'); //qutation
+                        if (y <= fCondition.Length - 2)
+                        {
+                            sbQuery.Append(" AND ");
+                        }
+                    }
+                    sbQuery.Append(';');
+
+                    MySqlDataReader reader = excecuteQuery(sbQuery.ToString());
+                    closeDb(con);
+                    return "deleted successfully";
+                }
+                catch (Exception)
+                {
+                    return "deleting failed";
+                }
+            }
+        }
+
+        ////collectData must be use like this////
+        //MySqlDataReader insert = df.collectData(tbl);
+        //while (insert.Read()) {
+        //    MessageBox.Show(insert.GetString(0)+ " " +insert.GetString(1)+ " " +insert.GetString(2));
+        //}
+        //Database_Functions.closeDb(Database_Functions.con);
+        public MySqlDataReader collectData(string tbl)
+        {
+            try
+            {
+                StringBuilder sbQuery = new StringBuilder();
+                sbQuery.Append("SELECT * ");
+                sbQuery.Append(" FROM ");
+                sbQuery.Append(tbl);
+                sbQuery.Append(';');
+
+                return excecuteQuery(sbQuery.ToString());
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        ////collectData must be use like this////
+        //MySqlDataReader insert = df.collectData(tbl);
+        //while (insert.Read()) {
+        //    MessageBox.Show(insert.GetString(0)+ " " +insert.GetString(1)+ " " +insert.GetString(2));
+        //}
+        //Database_Functions.closeDb(Database_Functions.con);
+        public MySqlDataReader collectData(string tbl, string[] fields)
+        {
+            try
+            {
+                StringBuilder sbQuery = new StringBuilder();
+                sbQuery.Append("SELECT ");
+                for (int x = 0; x < fields.Length; x++)
+                {
+                    sbQuery.Append('\u0060'); //GRAVE ACCENT 
+                    sbQuery.Append(fields[x]);
+                    sbQuery.Append('\u0060'); //GRAVE ACCENT 
+                    if (x <= fields.Length - 2)
+                    {
+                        sbQuery.Append('\u002C'); //comma
+                    }
+                }
+                sbQuery.Append(" FROM ");
+                sbQuery.Append(tbl);
+                sbQuery.Append(';');
+
+                return excecuteQuery(sbQuery.ToString());
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        ////collectData must be use like this////
+        //MySqlDataReader insert = df.collectData(tbl);
+        //while (insert.Read()) {
+        //    MessageBox.Show(insert.GetString(0)+ " " +insert.GetString(1)+ " " +insert.GetString(2));
+        //}
+        //Database_Functions.closeDb(Database_Functions.con);
+        public MySqlDataReader collectData(string tbl, string[] fields, string[] fCondition, string[] vCondition) {
+            try
+            {
+                StringBuilder sbQuery = new StringBuilder();
+                sbQuery.Append("SELECT ");
+                for (int x=0; x < fields.Length; x++) {
+                    sbQuery.Append('\u0060'); //GRAVE ACCENT 
+                    sbQuery.Append(fields[x]);
+                    sbQuery.Append('\u0060'); //GRAVE ACCENT 
+                    if (x <= fields.Length - 2)
+                    {
+                        sbQuery.Append('\u002C'); //comma
+                    }
+                }
+                sbQuery.Append(" FROM ");
+                sbQuery.Append(tbl);
+
+                if (fCondition.Length != 0) {
+                    sbQuery.Append(" WHERE ");
+                    for (int y = 0; y < fCondition.Length; y++) {
+                        sbQuery.Append('\u0060'); //GRAVE ACCENT 
+                        sbQuery.Append(fCondition[y]);
+                        sbQuery.Append('\u0060'); //GRAVE ACCENT 
+                        sbQuery.Append('=');
+                        sbQuery.Append('\u0022'); //qutation
+                        sbQuery.Append(vCondition[y]);
+                        sbQuery.Append('\u0022'); //qutation
+                        if (y <= fCondition.Length - 2)
+                        {
+                            sbQuery.Append(" AND ");
+                        }
+                    }
+                }
+                sbQuery.Append(';');
+
+                return excecuteQuery(sbQuery.ToString());
+            }
+            catch (Exception)
+            {
+                throw;
             }
         }
     }
