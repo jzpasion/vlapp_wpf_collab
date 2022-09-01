@@ -59,10 +59,19 @@ namespace vlapp.Control
             return reader;
         }
 
-        public string insertData(string tbl, string[] fields, string[] values) {
+        long executeQueryWithReturnId(string query) {
+            MySqlCommand command = new MySqlCommand(query, con);
+            MySqlDataReader reader;
+            openDb(con);
+            reader = command.ExecuteReader();
+            long lastId = command.LastInsertedId;
+            return lastId;
+        }
+
+        public long insertData(string tbl, string[] fields, string[] values) {
             if (fields.Length != values.Length)
             {
-                return "fields and values must be the same number";
+                return 0;
             }
             else {
                 try
@@ -93,13 +102,14 @@ namespace vlapp.Control
                     }
                     sbQuery.Append(");");
 
-                    MySqlDataReader reader = excecuteQuery(sbQuery.ToString());
+                    long lastId = executeQueryWithReturnId(sbQuery.ToString());
                     closeDb(con);
-                    return "successfully saved";
+                    return lastId;
                 }
                 catch (Exception)
                 {
-                    return "saving failed";
+                    //if 0 is returned that means saving is failed
+                    return 0;
                 }
             }
         }
@@ -326,12 +336,12 @@ namespace vlapp.Control
             }
         }
 
-        public void saveBlindConfig(string ip, int blindId, int redVal, int greenVal, int blueVal, int currVal)
+        public long saveBlindConfig(string ip, int blindId, int redVal, int greenVal, int blueVal, int currVal)
         {
             string tbl = "tbl_blind";
             string[] fields = { "blind_index", "red_val", "green_val", "blue_val", "current_gain", "ip" };
             string[] values = { blindId.ToString(), redVal.ToString(), greenVal.ToString(), blueVal.ToString(), currVal.ToString(), ip };
-            insertData(tbl, fields, values);
+            return insertData(tbl, fields, values);
         }
     }
 }
