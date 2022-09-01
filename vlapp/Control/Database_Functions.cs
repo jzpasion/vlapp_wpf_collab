@@ -54,6 +54,7 @@ namespace vlapp.Control
         MySqlDataReader excecuteQuery(string query) {
             MySqlCommand command = new MySqlCommand(query, con);
             MySqlDataReader reader;
+            closeDb(con);
             openDb(con);
             reader = command.ExecuteReader();
             return reader;
@@ -62,6 +63,7 @@ namespace vlapp.Control
         long executeQueryWithReturnId(string query) {
             MySqlCommand command = new MySqlCommand(query, con);
             MySqlDataReader reader;
+            closeDb(con);
             openDb(con);
             reader = command.ExecuteReader();
             long lastId = command.LastInsertedId;
@@ -164,7 +166,7 @@ namespace vlapp.Control
 
                     long lastId = executeQueryWithReturnId(sbQuery.ToString());
                     closeDb(con);
-                    return lastId;
+                    return 1;
                 }
                 catch (Exception)
                 {
@@ -336,12 +338,28 @@ namespace vlapp.Control
             }
         }
 
-        public long saveBlindConfig(string ip, int blindId, int redVal, int greenVal, int blueVal, int currVal)
+        public long blindConfig(string ip, int blindId, int redVal, int greenVal, int blueVal, int currVal)
         {
             string tbl = "tbl_blind";
             string[] fields = { "blind_index", "red_val", "green_val", "blue_val", "current_gain", "ip" };
             string[] values = { blindId.ToString(), redVal.ToString(), greenVal.ToString(), blueVal.ToString(), currVal.ToString(), ip };
-            return insertData(tbl, fields, values);
+            string[] fCondition = { fields[0], fields[5] };
+            string[] vCondition = { values[0], values[5] };
+            int cnt = 0;
+            MySqlDataReader collection = collectData(tbl, fields, fCondition, vCondition);
+            while (collection.Read()) { 
+                cnt++;
+            }
+
+            if (cnt == 0)
+            {
+                return insertData(tbl, fields, values);
+            }
+            else {
+                //data is existing
+                updateData(tbl, fields, values, fCondition, vCondition);
+                return 9999;
+            }
         }
 
         public long saveSchedule(string title , string startDate , string endDate)
