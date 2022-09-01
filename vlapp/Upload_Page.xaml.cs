@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using vlapp.Models;
+using vlapp.Control;
 
 namespace vlapp
 {
@@ -25,10 +26,11 @@ namespace vlapp
     public partial class Upload_Page : Page
     {
         ObservableCollection<VideoListItem> vList = new ObservableCollection<VideoListItem>();
+        bool dateCheckStatus = false;
         public Upload_Page()
         {
-
             InitializeComponent();
+            checkBoxStatus();
             DataContext = this.GetList();
 
 
@@ -68,7 +70,7 @@ namespace vlapp
             if(openFileDialog.ShowDialog() == true)
             {
                 txt_filename.Text = openFileDialog.SafeFileName;
-                txt_path.Text = openFileDialog.FileName;
+                //txt_path.Text = openFileDialog.FileName;
             }
         }
 
@@ -78,7 +80,7 @@ namespace vlapp
             if (files != null && files.Length != 0)
             {
                 txt_filename.Text = "video_"+(vList.Count + 1).ToString();
-                txt_path.Text = files[0];
+                //txt_path.Text = files[0];
                 popup_message.IsOpen = true;
             }
             
@@ -87,59 +89,414 @@ namespace vlapp
         private void btn_cancel_Click(object sender, RoutedEventArgs e)
         {
             txt_filename.Text = "";
-            txt_path.Text = "";
+            //txt_path.Text = "";
             popup_message.IsOpen = false;
         }
 
         private void btn_save_Click(object sender, RoutedEventArgs e)
         {
-            //if (date_fromDate.SelectedDate != null && date_toDate != null)
-            //{
-            //    if(time_fromTime.SelectedTime != null && time_toTime.SelectedTime != null)
-            //    {
-            //        dateChecker((DateTime)date_fromDate.SelectedDate, (DateTime)date_toDate.SelectedDate);
+            if (date_fromDate.SelectedDate != null && date_toDate.SelectedDate != null)
+            {
 
-            //        if (ResponseModel.Status == true)
-            //        {
-            //            MessageBox.Show("From Date Should Be Less Than To Date");
-            //            ResponseModel.Status = false;
-            //        }
-            //        else
-            //        {
-            //            txt_filename.Text = "";
-            //            txt_path.Text = "";
-            //            popup_message.IsOpen = false;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        MessageBox.Show("Please fill in fromTime/toTime");
-            //    }
+                    dateChecker((DateTime)date_fromDate.SelectedDate, (DateTime)date_toDate.SelectedDate);
 
-            //}
-            //else
-            //{
-            //    MessageBox.Show("Please fill in fromDate/toDate");
-            //}
+                    if (dateCheckStatus)
+                    {
+                        MessageBox.Show("From Date Should Be Less Than To Date");
+                        dateCheckStatus = false;
+                    }
+                    else
+                    {
+                        txt_filename.Text = "";
+                        popup_message.IsOpen = false;
+                    }
 
-            System.Diagnostics.Trace.WriteLine(time_toTime.SelectedTime);
+
+            }
+            else
+            {
+                MessageBox.Show("Please fill in fromDate/toDate");
+            }
+
+            //getTimestamp(date_fromDate.SelectedDate.Value);
+
+        }
+
+        private void getTimestamp(DateTime date)
+        {
+            string formatDate = date.ToString("yyyy-MM-dd");
+            //string formatTime = time.ToString("hh:mm tt");
+
+
+            string combine = formatDate;
+            DateTime combineDateTime = DateTime.Parse(combine);
+            var unixTimeSeconds = new DateTimeOffset(combineDateTime).ToUnixTimeSeconds();
+            System.Diagnostics.Trace.WriteLine(unixTimeSeconds);
+
+
+            //return unixTimeSeconds.ToString();
+
         }
 
         private void date_fromDate_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
-            //string formatDate = date_fromDate.SelectedDate.Value.ToString("MM-dd-yyyy");
+            //string formatDate = date_fromDate.SelectedDate.Value.ToString("yyyy-MM-dd");
 
             //System.Diagnostics.Trace.WriteLine(formatDate);
         }
 
         private void dateChecker( DateTime fromDate, DateTime toDate)
         {
-            ResponseModel.Status = false;
+            dateCheckStatus = false;
 
             if(fromDate > toDate)
             {
-                ResponseModel.Status = true;
+                dateCheckStatus = true;
             }
         }
+
+
+        //Days Clicked
+        private void check_allDays_Click(object sender, RoutedEventArgs e)
+        {
+            checkBoxStatus();
+        }
+
+        private void check_monday_Click(object sender, RoutedEventArgs e)
+        {
+            checkBoxStatus();
+        }
+
+        private void check_tuesday_Click(object sender, RoutedEventArgs e)
+        {
+            checkBoxStatus();
+        }
+
+        private void check_wednesday_Click(object sender, RoutedEventArgs e)
+        {
+            checkBoxStatus();
+        }
+
+        private void check_thursday_Click(object sender, RoutedEventArgs e)
+        {
+            checkBoxStatus();
+        }
+
+        private void check_friday_Click(object sender, RoutedEventArgs e)
+        {
+            checkBoxStatus();
+        }
+
+        private void check_saturday_Click(object sender, RoutedEventArgs e)
+        {
+            checkBoxStatus();
+        }
+
+        private void check_sunday_Click(object sender, RoutedEventArgs e)
+        {
+            checkBoxStatus();
+        }
+
+        private void checkBoxStatus()
+        {
+            //all
+            if (check_allDays.IsChecked == true)
+            {
+                disableAllDays();
+                time_fromTime_all.IsEnabled = true;
+                time_toTime_all.IsEnabled = true;
+            }
+            else
+            {
+                enableAllDays();
+                time_fromTime_all.IsEnabled = false;
+                time_toTime_all.IsEnabled = false;
+            }
+
+            //monday
+            if(check_monday.IsChecked == true)
+            {
+                time_fromTime_monday.IsEnabled = true;
+                time_toTime_monday.IsEnabled= true;
+            }
+            else
+            {
+                time_fromTime_monday.IsEnabled = false;
+                time_toTime_monday.IsEnabled = false;
+            }
+
+            //tuesday
+            if (check_tuesday.IsChecked == true)
+            {
+                time_fromTime_tuesday.IsEnabled = true;
+                time_toTime_tuesday.IsEnabled = true;
+            }
+            else
+            {
+                time_fromTime_tuesday.IsEnabled = false;
+                time_toTime_tuesday.IsEnabled = false;
+            }
+
+            //wednesday
+            if (check_wednesday.IsChecked == true)
+            {
+                time_fromTime_wednesday.IsEnabled = true;
+                time_toTime_wednesday.IsEnabled = true;
+            }
+            else
+            {
+                time_fromTime_wednesday.IsEnabled = false;
+                time_toTime_wednesday.IsEnabled = false;
+            }
+
+            //thursday
+            if (check_thursday.IsChecked == true)
+            {
+                time_fromTime_thursday.IsEnabled = true;
+                time_toTime_thursday.IsEnabled = true;
+            }
+            else
+            {
+                time_fromTime_thursday.IsEnabled = false;
+                time_toTime_thursday.IsEnabled = false;
+            }
+
+            //friday
+            if (check_friday.IsChecked == true)
+            {
+                time_fromTime_friday.IsEnabled = true;
+                time_toTime_friday.IsEnabled = true;
+            }
+            else
+            {
+                time_fromTime_friday.IsEnabled = false;
+                time_toTime_friday.IsEnabled = false;
+            }
+
+            //satruday
+            if (check_saturday.IsChecked == true)
+            {
+                time_fromTime_saturday.IsEnabled = true;
+                time_toTime_saturday.IsEnabled = true;
+            }
+            else
+            {
+                time_fromTime_saturday.IsEnabled = false;
+                time_toTime_saturday.IsEnabled = false;
+            }
+
+            //sunday
+            if (check_thursday.IsChecked == true)
+            {
+                time_fromTime_sunday.IsEnabled = true;
+                time_toTime_sunday.IsEnabled = true;
+            }
+            else
+            {
+                time_fromTime_sunday.IsEnabled = false;
+                time_toTime_sunday.IsEnabled = false;
+            }
+        }
+
+        private void disableAllDays()
+        {
+            day_monday.IsEnabled = false;
+            day_monday.Visibility = Visibility.Collapsed;
+
+            day_tuesday.IsEnabled = false;
+            day_tuesday.Visibility = Visibility.Collapsed;
+
+            day_wednesday.IsEnabled = false;
+            day_wednesday.Visibility = Visibility.Collapsed;
+
+            day_thrusday.IsEnabled = false;
+            day_thrusday.Visibility = Visibility.Collapsed;
+
+            day_friday.IsEnabled = false;
+            day_friday.Visibility = Visibility.Collapsed;
+
+            day_saturday.IsEnabled = false;
+            day_saturday.Visibility = Visibility.Collapsed;
+
+            day_sunday.IsEnabled = false;
+            day_sunday.Visibility = Visibility.Collapsed;
+
+        }
+
+        private void enableAllDays()
+        {
+            day_monday.IsEnabled = true;
+            day_monday.Visibility = Visibility.Visible;
+
+            day_tuesday.IsEnabled = true;
+            day_tuesday.Visibility = Visibility.Visible;
+
+            day_wednesday.IsEnabled = true;
+            day_wednesday.Visibility = Visibility.Visible;
+
+            day_thrusday.IsEnabled = true;
+            day_thrusday.Visibility = Visibility.Visible;
+
+            day_friday.IsEnabled = true;
+            day_friday.Visibility = Visibility.Visible;
+
+            day_saturday.IsEnabled = true;
+            day_saturday.Visibility = Visibility.Visible;
+
+            day_sunday.IsEnabled = true;
+            day_sunday.Visibility = Visibility.Visible;
+
+        }
+
+        //Time Changed All days
+        private void time_fromTime_all_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            time_fromTime_all.SelectedTime = timeValidation(time_fromTime_all.SelectedTime , time_toTime_all.SelectedTime , 1);
+
+        }
+
+        private void time_toTime_all_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            time_toTime_all.SelectedTime = timeValidation(time_fromTime_all.SelectedTime, time_toTime_all.SelectedTime , 2);
+        }
+
+        //Time Changed Monday
+        private void time_fromTime_monday_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            time_fromTime_monday.SelectedTime = timeValidation(time_fromTime_monday.SelectedTime, time_toTime_monday.SelectedTime, 1);
+        }
+
+        private void time_toTime_monday_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            time_toTime_monday.SelectedTime = timeValidation(time_fromTime_monday.SelectedTime, time_toTime_monday.SelectedTime, 2);
+        }
+
+        //Time Changed Tuesday
+
+        private void time_fromTime_tuesday_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            time_fromTime_tuesday.SelectedTime = timeValidation(time_fromTime_tuesday.SelectedTime, time_toTime_tuesday.SelectedTime, 1);
+        }
+
+        private void time_toTime_tuesday_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            time_toTime_tuesday.SelectedTime = timeValidation(time_fromTime_tuesday.SelectedTime, time_toTime_tuesday.SelectedTime, 2);
+        }
+
+        //Time Changed Wednesday
+
+        private void time_fromTime_wednesday_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            time_fromTime_wednesday.SelectedTime = timeValidation(time_fromTime_wednesday.SelectedTime, time_toTime_wednesday.SelectedTime, 1);
+        }
+
+        private void time_toTime_wednesday_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            time_toTime_wednesday.SelectedTime = timeValidation(time_fromTime_wednesday.SelectedTime, time_toTime_wednesday.SelectedTime, 2);
+        }
+
+        //Time Changed Thursday
+
+        private void time_fromTime_thursday_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            time_fromTime_thursday.SelectedTime = timeValidation(time_fromTime_thursday.SelectedTime, time_toTime_thursday.SelectedTime, 1);
+        }
+
+        private void time_toTime_thursday_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            time_toTime_thursday.SelectedTime = timeValidation(time_fromTime_thursday.SelectedTime, time_toTime_thursday.SelectedTime, 2);
+        }
+
+        //Time Changed Friday
+
+        private void time_fromTime_friday_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            time_fromTime_friday.SelectedTime = timeValidation(time_fromTime_friday.SelectedTime, time_toTime_friday.SelectedTime, 1);
+        }
+
+        private void time_toTime_friday_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            time_toTime_friday.SelectedTime = timeValidation(time_fromTime_friday.SelectedTime, time_toTime_friday.SelectedTime, 2);
+        }
+
+        //Time Changed Saturday
+
+        private void time_fromTime_saturday_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            time_fromTime_saturday.SelectedTime = timeValidation(time_fromTime_saturday.SelectedTime, time_toTime_saturday.SelectedTime, 1);
+        }
+
+        private void time_toTime_saturday_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            time_toTime_saturday.SelectedTime = timeValidation(time_fromTime_saturday.SelectedTime, time_toTime_saturday.SelectedTime, 2);
+        }
+
+        //Time Changed Sunday
+
+        private void time_fromTime_sunday_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            time_fromTime_sunday.SelectedTime = timeValidation(time_fromTime_sunday.SelectedTime, time_toTime_sunday.SelectedTime, 1);
+        }
+
+        private void time_toTime_sunday_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            time_toTime_sunday.SelectedTime = timeValidation(time_fromTime_sunday.SelectedTime, time_toTime_sunday.SelectedTime, 2);
+        }
+
+        private DateTime timeValidation(DateTime? from, DateTime? to , int cat)
+        {
+            DateTime holder = DateTime.Now;
+
+            if (from != null && to != null)
+            {
+                switch (cat)
+                {
+                    case (1):
+                        if (from > to)
+                        {
+                            MessageBox.Show("From Time Should Be Less Than To Time");
+                            holder = to.Value.AddMinutes(-1);
+
+                        }
+                        else
+                        {
+                            holder = (DateTime)from;
+
+                        }
+                        break;
+                    case (2):
+                        if (from > to)
+                        {
+                            MessageBox.Show("From Time Should Be Less Than To Time");
+                            holder = from.Value.AddMinutes(1);
+                        }
+                        else
+                        {
+                            holder = (DateTime)to;
+                        }
+                        break;
+
+                }
+                return holder;
+            }
+            else
+            {
+                switch (cat)
+                {
+                    case (0):
+                        break;
+                    case(1):
+                        holder =  (DateTime)from;
+                        break;
+                    case(2):
+                        holder = (DateTime)to;
+                        break;
+                }
+            }
+            return holder;
+        
+        }
+
+        
     }
 }
