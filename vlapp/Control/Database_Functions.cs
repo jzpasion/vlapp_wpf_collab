@@ -343,5 +343,29 @@ namespace vlapp.Control
             string[] values = { blindId.ToString(), redVal.ToString(), greenVal.ToString(), blueVal.ToString(), currVal.ToString(), ip };
             return insertData(tbl, fields, values);
         }
+
+        public long saveSchedule(string title , string startDate , string endDate)
+        {
+            string tbl = "tbl_schedule";
+            string[] fields = { "title", "start_date", "end_date" };
+            string[] values = { title, startDate, endDate };
+            return insertData(tbl, fields, values);
+        }
+
+        public long saveDay(string day, int schedId)
+        {
+            string tbl = "tbl_day";
+            string[] fields = { "day", "schedule_id" };
+            string[] values = { day, schedId.ToString() };
+            return insertData(tbl, fields, values);
+        }
+
+        public void saveTime(string start_time , string end_time , int dayId)
+        {
+            string tbl = "tbl_time";
+            string[] fields = { "start_time", "end_time", "day_id" };
+            string[] values = {start_time , end_time , dayId.ToString() };
+            insertData(tbl, fields, values);
+        }
     }
 }
