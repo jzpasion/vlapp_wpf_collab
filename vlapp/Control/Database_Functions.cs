@@ -205,6 +205,20 @@ namespace vlapp.Control
             }
         }
 
+        public string clearTbl(string tbl) {
+            try
+            {
+                string query = "DELETE FROM `"+tbl+"`;";
+                MySqlDataReader reader = excecuteQuery(query.ToString());
+                closeDb(con);
+                return "db cleared";
+            }
+            catch (Exception)
+            {
+                return "db failed to clear";
+            }
+        }
+
         ////collectData must be use like this////
         //MySqlDataReader insert = df.collectData(tbl);
         //while (insert.Read()) {
@@ -310,6 +324,14 @@ namespace vlapp.Control
             {
                 throw;
             }
+        }
+
+        public void saveBlindConfig(string ip, int blindId, int redVal, int greenVal, int blueVal, int currVal)
+        {
+            string tbl = "tbl_blind";
+            string[] fields = { "blind_index", "red_val", "green_val", "blue_val", "current_gain", "ip" };
+            string[] values = { blindId.ToString(), redVal.ToString(), greenVal.ToString(), blueVal.ToString(), currVal.ToString(), ip };
+            insertData(tbl, fields, values);
         }
     }
 }
