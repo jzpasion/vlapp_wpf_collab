@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using vlapp.Control;
 using vlapp.Models;
 
 namespace vlapp
@@ -27,11 +28,17 @@ namespace vlapp
         NodeListItem? element;
         ModuleModel? ModuleElement;
         int index, moduleIndex , blindIDHolder;
+        string tempIp;
+        int currentGain_1, currentGain_2, currentGain_3, currentGain_4;
+        int redVal_1, redVal_2, redVal_3, redVal_4;
+        int greenVal_1, greenVal_2, greenVal_3, greenVal_4;
+        int blueVal_1, blueVal_2, blueVal_3, blueVal_4;
         public Brightness_Page()
         {
             InitializeComponent();
             connection.sendWithResponse();
             blindList = connection.GetBlindList();
+            //saveNodesToDb(new List<NodeListItem>(blindList));
             listbox_arrange_ip.ItemsSource = blindList;
             listbox_module_1.ItemsSource = displayModule();
             listbox_module_2.ItemsSource = displayModule();
@@ -49,29 +56,82 @@ namespace vlapp
             //}
         }
 
+        //private void saveNodesToDb(List<NodeListItem> nodes) {
+        //    //clearing tbl_node ::dangerous//
+        //    Database_Functions fDb = new Database_Functions();
+        //    string tbl = "tbl_node";
+        //    string msg = fDb.clearTbl(tbl);
+        //    // clearing tbl_node::dangerous//
+
+        //    foreach (var x in nodes) {
+        //        string[] fields = { "ip", "blind_num", "pos" };
+        //        string ip = x.BlindIp[0] + "." + x.BlindIp[1] + "." + x.BlindIp[2] + "." + x.BlindIp[3];
+        //        string[] values = { ip, x.BlindNumber.ToString(), x.nodeIndex.ToString() };
+        //        fDb.insertData(tbl, fields, values);
+        //    }
+        //}
+
+        private void applyConfig(int blindIndex, int redVal, int greenVal, int blueVal, int currVal) {
+            //add send rgb and current gain to esp
+            //save to database
+            Database_Functions fDb = new Database_Functions();
+            long x = fDb.blindConfig(tempIp, blindIndex, redVal, greenVal, blueVal, currVal);
+            //9999 means data is existing
+            if (x != 0)
+            {
+                MessageBox.Show("success");
+            }
+            else
+            {
+                MessageBox.Show("failed");
+            }
+        }
+
         //blind 1
         private void sliderb1_all_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             int value = Convert.ToInt32(sliderb1_all.Value);
             txtb1_all.Text = "Current gain: " + value;
+            currentGain_1 = value;
         }
 
         private void sliderb1_red_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             int value = Convert.ToInt32(sliderb1_red.Value);
             txtb1_red.Text = "Red: " + value;
+            redVal_1 = value;
         }
 
         private void sliderb1_green_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             int value = Convert.ToInt32(sliderb1_green.Value);
             txtb1_green.Text = "Green: " + value;
+            greenVal_1 = value;
         }
 
         private void sliderb1_blue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             int value = Convert.ToInt32(sliderb1_blue.Value);
             txtb1_blue.Text = "Blue: " + value;
+            blueVal_1 = value;
+        }
+        private void btn_save_blind1_brightness_Click(object sender, RoutedEventArgs e)
+        {
+            applyConfig(1, redVal_1, greenVal_1, blueVal_1, currentGain_1);
+        }
+
+        private void btn_reset_blind1_brightness_Click(object sender, RoutedEventArgs e)
+        {
+            //Database_Functions fDb = new Database_Functions();
+
+            //long x = fDb.saveBlindConfig(tempIp, 1, 1, 1, 1, 1);
+            //string tbl = "tbl_blind";
+            //string[] fields = { "red_val" };
+            //string[] values = { "99" };
+            //string[] fCondition = { "ip" };
+            //string[] vCondition = { "192.168.1.7" };
+            //long lastId = fDb.updateData(tbl, fields, values, fCondition, vCondition);
+            //MessageBox.Show(lastId.ToString());
         }
 
         //blind 2
@@ -79,24 +139,33 @@ namespace vlapp
         {
             int value = Convert.ToInt32(sliderb2_all.Value);
             txtb2_all.Text = "Current gain: " + value;
+            currentGain_2 = value;
         }
 
         private void sliderb2_red_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             int value = Convert.ToInt32(sliderb2_red.Value);
             txtb2_red.Text = "Red: " + value;
+            redVal_2 = value;
         }
 
         private void sliderb2_green_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             int value = Convert.ToInt32(sliderb2_green.Value);
             txtb2_green.Text = "Green: " + value;
+            greenVal_2 = value;
         }
 
         private void sliderb2_blue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             int value = Convert.ToInt32(sliderb2_blue.Value);
             txtb2_blue.Text = "Blue: " + value;
+            blueVal_2 = value;
+        }
+
+        private void btn_save_blind2_brightness_Click(object sender, RoutedEventArgs e)
+        {
+            applyConfig(2, redVal_2, greenVal_2, blueVal_2, currentGain_2);
         }
 
         //blind 3
@@ -104,24 +173,33 @@ namespace vlapp
         {
             int value = Convert.ToInt32(sliderb3_all.Value);
             txtb3_all.Text = "Current gain: " + value;
+            currentGain_3 = value;
         }
 
         private void sliderb3_red_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             int value = Convert.ToInt32(sliderb3_red.Value);
             txtb3_red.Text = "Red: " + value;
+            redVal_3 = value;
         }
 
         private void sliderb3_green_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             int value = Convert.ToInt32(sliderb3_green.Value);
             txtb3_green.Text = "Green: " + value;
+            greenVal_3 = value;
         }
 
         private void sliderb3_blue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             int value = Convert.ToInt32(sliderb3_blue.Value);
             txtb3_blue.Text = "Blue: " + value;
+            blueVal_3 = value;
+        }
+
+        private void btn_save_blind3_brightness_Click(object sender, RoutedEventArgs e)
+        {
+            applyConfig(3, redVal_3, greenVal_3, blueVal_3, currentGain_3);
         }
 
         //blind 4
@@ -129,24 +207,33 @@ namespace vlapp
         {
             int value = Convert.ToInt32(sliderb4_all.Value);
             txtb4_all.Text = "Current gain: " + value;
+            currentGain_4 = value;
         }
 
         private void sliderb4_red_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             int value = Convert.ToInt32(sliderb4_red.Value);
             txtb4_red.Text = "Red: " + value;
+            redVal_4 = value;
         }
 
         private void sliderb4_green_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             int value = Convert.ToInt32(sliderb4_green.Value);
             txtb4_green.Text = "Green: " + value;
+            greenVal_4 = value;
         }
 
         private void sliderb4_blue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             int value = Convert.ToInt32(sliderb4_blue.Value);
             txtb4_blue.Text = "Blue: " + value;
+            blueVal_4 = value;
+        }
+
+        private void btn_save_blind4_brightness_Click(object sender, RoutedEventArgs e)
+        {
+            applyConfig(4, redVal_4, greenVal_4, blueVal_4, currentGain_4);
         }
 
         //pop up
@@ -192,6 +279,8 @@ namespace vlapp
            return modules;
         }
 
+
+
         private void btn_esp_Click(object sender, RoutedEventArgs e)
         {
             Button? btn = sender as Button;
@@ -209,6 +298,8 @@ namespace vlapp
 
                     txt_EspNumber.Content = "Selected Esp ID: "+element.nodeIndex.ToString();
                     txt_BlindNumber.Content = "Number of blinds: "+ element.BlindNumber.ToString();
+                    tempIp = element.BlindIp[0]+"."+element.BlindIp[1]+"."+element.BlindIp[2]+"."+element.BlindIp[3];
+
 
                     switch(element.BlindNumber)
                     {
@@ -218,7 +309,7 @@ namespace vlapp
                             blind_2.IsEnabled = false;
                             blind_3.IsEnabled = false;
                             blind_4.IsEnabled = false;
-                        break;
+                            break;
                         case 2:
                             resetSliders();
                             blind_1.IsEnabled = true;
@@ -256,18 +347,22 @@ namespace vlapp
 
         private void resetSliders()
         {
+            sliderb1_all.Value= 0;
             sliderb1_blue.Value = 0;
             sliderb1_green.Value = 0;
             sliderb1_red.Value = 0;
 
+            sliderb2_all.Value = 0;
             sliderb2_blue.Value = 0;
             sliderb2_green.Value = 0;
             sliderb2_red.Value = 0;
 
+            sliderb3_all.Value = 0;
             sliderb3_blue.Value = 0;
             sliderb3_green.Value = 0;
             sliderb3_red.Value = 0;
 
+            sliderb4_all.Value = 0;
             sliderb4_blue.Value = 0;
             sliderb4_green.Value = 0;
             sliderb4_red.Value = 0;
@@ -316,8 +411,6 @@ namespace vlapp
                 }
             }
         }
-
-    
 
         private void btn_module3_Click(object sender, RoutedEventArgs e)
         {

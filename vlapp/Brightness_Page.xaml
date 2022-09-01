@@ -129,11 +129,20 @@
                     <Slider x:Name="sliderb1_blue" Minimum="0" Maximum="100" TickFrequency="10" TickPlacement="BottomRight" Margin="15" ValueChanged="sliderb1_blue_ValueChanged" />
                         <Button x:Name="btn_save_blind1_brightness"
                         Width="200"
-                        Style="{StaticResource MaterialDesignRaisedLightButton}"
+                        Style="{StaticResource MaterialDesignRaisedDarkButton}"
                         Margin="0 10 0 10"
-                        materialDesign:ButtonAssist.CornerRadius="5">
+                        materialDesign:ButtonAssist.CornerRadius="5" Click="btn_save_blind1_brightness_Click">
                             <TextBlock Text="Save" />
                         </Button>
+
+                        <Button x:Name="btn_reset_blind1_brightness"
+                        Width="200"
+                        Style="{StaticResource MaterialDesignRaisedLightButton}"
+                        Margin="0 10 0 10"
+                        materialDesign:ButtonAssist.CornerRadius="5" Click="btn_reset_blind1_brightness_Click">
+                            <TextBlock Text="Reset" />
+                        </Button>
+
                         <TextBlock Text="Modules" FontWeight="Bold" FontSize="25" HorizontalAlignment="Center" Margin="0 10 0 0"/>
                        
                         <ListBox x:Name="listbox_module_1" ItemsSource="{Binding}" >
@@ -168,12 +177,20 @@
 
                         <Button x:Name="btn_save_blind2_brightness"
                         Width="200"
+                        Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                        Margin="0 10 0 10"
+                        materialDesign:ButtonAssist.CornerRadius="5" Click="btn_save_blind2_brightness_Click">
+                            <TextBlock Text="Save" />
+                        </Button>
+
+                        <Button x:Name="btn_reset_blind2_brightness"
+                        Width="200"
                         Style="{StaticResource MaterialDesignRaisedLightButton}"
                         Margin="0 10 0 10"
                         materialDesign:ButtonAssist.CornerRadius="5">
-                            <TextBlock Text="Save" />
+                            <TextBlock Text="Reset" />
                         </Button>
-                    
+
                         <TextBlock Text="Modules" FontWeight="Bold" FontSize="25" HorizontalAlignment="Center" Margin="0 10 0 0"/>
 
                         <ListBox x:Name="listbox_module_2" ItemsSource="{Binding}" >
@@ -207,12 +224,20 @@
 
                         <Button x:Name="btn_save_blind3_brightness"
                         Width="200"
-                        Style="{StaticResource MaterialDesignRaisedLightButton}"
+                        Style="{StaticResource MaterialDesignRaisedDarkButton}"
                         Margin="0 10 0 10"
-                        materialDesign:ButtonAssist.CornerRadius="5">
+                        materialDesign:ButtonAssist.CornerRadius="5" Click="btn_save_blind3_brightness_Click">
                             <TextBlock Text="Save" />
                         </Button>
                     
+                        <Button x:Name="btn_reset_blind3_brightness"
+                        Width="200"
+                        Style="{StaticResource MaterialDesignRaisedLightButton}"
+                        Margin="0 10 0 10"
+                        materialDesign:ButtonAssist.CornerRadius="5">
+                            <TextBlock Text="Reset" />
+                        </Button>
+
                         <TextBlock Text="Modules" FontWeight="Bold" FontSize="25" HorizontalAlignment="Center" Margin="0 10 0 0"/>
 
                         <ListBox x:Name="listbox_module_3" ItemsSource="{Binding}" >
@@ -247,12 +272,20 @@
 
                         <Button x:Name="btn_save_blind4_brightness"
                         Width="200"
+                        Style="{StaticResource MaterialDesignRaisedDarkButton}"
+                        Margin="0 10 0 10"
+                        materialDesign:ButtonAssist.CornerRadius="5" Click="btn_save_blind4_brightness_Click">
+                            <TextBlock Text="Save" />
+                        </Button>
+
+                        <Button x:Name="btn_reset_blind4_brightness"
+                        Width="200"
                         Style="{StaticResource MaterialDesignRaisedLightButton}"
                         Margin="0 10 0 10"
                         materialDesign:ButtonAssist.CornerRadius="5">
-                            <TextBlock Text="Save" />
+                            <TextBlock Text="Reset" />
                         </Button>
-                    
+
                         <TextBlock Text="Modules" FontWeight="Bold" FontSize="25" HorizontalAlignment="Center" Margin="0 10 0 0"/>
 
                         <ListBox x:Name="listbox_module_4" ItemsSource="{Binding}" >
