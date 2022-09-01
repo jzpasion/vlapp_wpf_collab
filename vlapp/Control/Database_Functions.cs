@@ -352,11 +352,11 @@ namespace vlapp.Control
             return insertData(tbl, fields, values);
         }
 
-        public long saveDay(string day, int schedId)
+        public long saveDay(int day, int schedId)
         {
             string tbl = "tbl_day";
             string[] fields = { "day", "schedule_id" };
-            string[] values = { day, schedId.ToString() };
+            string[] values = { day.ToString(), schedId.ToString() };
             return insertData(tbl, fields, values);
         }
 
@@ -365,7 +365,7 @@ namespace vlapp.Control
             string tbl = "tbl_time";
             string[] fields = { "start_time", "end_time", "day_id" };
             string[] values = {start_time , end_time , dayId.ToString() };
-            insertData(tbl, fields, values);
+            insertData(tbl , fields , values);
         }
     }
 }
