@@ -30,32 +30,12 @@ namespace vlapp
         public Upload_Page()
         {
             InitializeComponent();
+            Database_Functions db = new Database_Functions();
             checkBoxStatus();
-            DataContext = this.GetList();
-
-
+            DataContext = db.getSchedule();
         }
-        public ObservableCollection<VideoListItem> GetList()
-        {
-            vList.Add(new VideoListItem() { id = 1, title = "1", tfrom = "1:30", tto = "1:30" });
-            vList.Add(new VideoListItem() { id = 2, title = "3:23", tfrom = "3:23", tto = "2:12" });
-            vList.Add(new VideoListItem() { id = 3, title = "1:12", tfrom = "1:12", tto = "2:23" });
-            vList.Add(new VideoListItem() { id = 4, title = "4:32", tfrom = "4:32", tto = "12:12" });
-            vList.Add(new VideoListItem() { id = 1, title = "1", tfrom = "1:30", tto = "1:30" });
-            vList.Add(new VideoListItem() { id = 2, title = "3:23", tfrom = "3:23", tto = "2:12" });
-            vList.Add(new VideoListItem() { id = 3, title = "1:12", tfrom = "1:12", tto = "2:23" });
-            vList.Add(new VideoListItem() { id = 4, title = "4:32", tfrom = "4:32", tto = "12:12" });
-            vList.Add(new VideoListItem() { id = 1, title = "1", tfrom = "1:30", tto = "1:30" });
-            vList.Add(new VideoListItem() { id = 2, title = "3:23", tfrom = "3:23", tto = "2:12" });
-            vList.Add(new VideoListItem() { id = 3, title = "1:12", tfrom = "1:12", tto = "2:23" });
-            vList.Add(new VideoListItem() { id = 4, title = "4:32", tfrom = "4:32", tto = "12:12" });
-            vList.Add(new VideoListItem() { id = 1, title = "1", tfrom = "1:30", tto = "1:30" });
-            vList.Add(new VideoListItem() { id = 2, title = "3:23", tfrom = "3:23", tto = "2:12" });
-            vList.Add(new VideoListItem() { id = 3, title = "1:12", tfrom = "1:12", tto = "2:23" });
 
 
-            return vList;
-        }
 
 
         private void btn_add_video_Click(object sender, RoutedEventArgs e)
@@ -98,18 +78,68 @@ namespace vlapp
             if (date_fromDate.SelectedDate != null && date_toDate.SelectedDate != null)
             {
 
-                    dateChecker((DateTime)date_fromDate.SelectedDate, (DateTime)date_toDate.SelectedDate);
+                dateChecker((DateTime)date_fromDate.SelectedDate, (DateTime)date_toDate.SelectedDate);
 
-                    if (dateCheckStatus)
+                if (dateCheckStatus)
+                {
+                    MessageBox.Show("From Date Should Be Less Than To Date");
+                    dateCheckStatus = false;
+                }
+                else
+                {
+                    if(timeCheckResponse() == "No Days is Checked!")
                     {
-                        MessageBox.Show("From Date Should Be Less Than To Date");
-                        dateCheckStatus = false;
+                        MessageBox.Show(timeCheckResponse());
                     }
-                    else
-                    {
+                    else if (timeCheckResponse() == ""){
+                        Database_Functions db = new Database_Functions();
+                        long dayID = 0;
+                        long schedLastId = db.saveSchedule("manghula kamuna", getTimestampDate((DateTime)date_fromDate.SelectedDate), getTimestampDate((DateTime)date_toDate.SelectedDate));
+                        List<int> days = checkBoxStatus();
+                        foreach (var item in days)
+                        {
+                            dayID = db.saveDay(item, (int)schedLastId);
+                        }
+
+                        foreach (var item in days)
+                        {
+                            switch (item)
+                            {
+                                case (1):
+                                    db.saveTime(getTimestampTime((DateTime)time_fromTime_monday.SelectedTime), getTimestampTime((DateTime)time_toTime_monday.SelectedTime), (int)dayID);
+                                    break;
+                                case (2):
+                                    db.saveTime(getTimestampTime((DateTime)time_fromTime_tuesday.SelectedTime), getTimestampTime((DateTime)time_toTime_tuesday.SelectedTime), (int)dayID);
+                                    break;
+                                case (3):
+                                    db.saveTime(getTimestampTime((DateTime)time_fromTime_wednesday.SelectedTime), getTimestampTime((DateTime)time_toTime_wednesday.SelectedTime), (int)dayID);
+                                    break;
+                                case (4):
+                                    db.saveTime(getTimestampTime((DateTime)time_fromTime_thursday.SelectedTime), getTimestampTime((DateTime)time_toTime_thursday.SelectedTime), (int)dayID);
+                                    break;
+                                case (5):
+                                    db.saveTime(getTimestampTime((DateTime)time_fromTime_friday.SelectedTime), getTimestampTime((DateTime)time_toTime_friday.SelectedTime), (int)dayID);
+                                    break;
+                                case (6):
+                                    db.saveTime(getTimestampTime((DateTime)time_fromTime_saturday.SelectedTime), getTimestampTime((DateTime)time_toTime_saturday.SelectedTime), (int)dayID);
+                                    break;
+                                case (7):
+                                    db.saveTime(getTimestampTime((DateTime)time_fromTime_sunday.SelectedTime), getTimestampTime((DateTime)time_toTime_sunday.SelectedTime), (int)dayID);
+                                    break;
+                                case (8):
+                                    db.saveTime(getTimestampTime((DateTime)time_fromTime_all.SelectedTime), getTimestampTime((DateTime)time_toTime_all.SelectedTime), (int)dayID);
+                                    break;
+                            }
+                        }
+
                         txt_filename.Text = "";
                         popup_message.IsOpen = false;
                     }
+                    else
+                    {
+                        MessageBox.Show("Please fill in fromTime/toTime at " + timeCheckResponse() + "Time");
+                    }
+                }
 
 
             }
@@ -118,11 +148,83 @@ namespace vlapp
                 MessageBox.Show("Please fill in fromDate/toDate");
             }
 
-            //getTimestamp(date_fromDate.SelectedDate.Value);
+        
+
+            }
+
+        private string timeCheckResponse()
+        {
+            string response = "";
+            List<int> days = checkBoxStatus();
+
+            if(days.Count == 0)
+            {
+                response = "No Days is Checked!";
+            }
+            else
+            {
+                foreach (int day in days)
+                {
+                    switch (day)
+                    {
+                        case (1):
+                            if (!timeChecker(time_fromTime_monday.SelectedTime, time_toTime_monday.SelectedTime))
+                            {
+                                response += "Monday ";
+                            }
+                            break;
+                        case (2):
+                            if (!timeChecker(time_fromTime_tuesday.SelectedTime, time_toTime_tuesday.SelectedTime))
+                            {
+                                response += "Tuesday ";
+                            }
+                            break;
+                        case (3):
+                            if (!timeChecker(time_fromTime_wednesday.SelectedTime, time_toTime_wednesday.SelectedTime))
+                            {
+                                response += "Wednesday ";
+                            }
+                            break;
+                        case (4):
+                            if (!timeChecker(time_fromTime_thursday.SelectedTime, time_toTime_thursday.SelectedTime))
+                            {
+                                response += "Thursday ";
+                            }
+                            break;
+                        case (5):
+                            if (!timeChecker(time_fromTime_friday.SelectedTime, time_toTime_friday.SelectedTime))
+                            {
+                                response += "Friday ";
+                            }
+                            break;
+                        case (6):
+                            if (!timeChecker(time_fromTime_saturday.SelectedTime, time_toTime_saturday.SelectedTime))
+                            {
+                                response += "Saturday ";
+                            }
+                            break;
+                        case (7):
+                            if (!timeChecker(time_fromTime_sunday.SelectedTime, time_toTime_sunday.SelectedTime))
+                            {
+                                response += "Sunday ";
+                            }
+                            break;
+                        case (8):
+                            if (!timeChecker(time_fromTime_all.SelectedTime, time_toTime_all.SelectedTime))
+                            {
+                                response += "All days ";
+                            }
+                            break;
+                    }
+                }
+            }
+            
+
+            return response;
 
         }
 
-        private void getTimestamp(DateTime date)
+        private string getTimestampDate(DateTime date)
         {
             string formatDate = date.ToString("yyyy-MM-dd");
             //string formatTime = time.ToString("hh:mm tt");
@@ -131,10 +233,26 @@ namespace vlapp
             string combine = formatDate;
             DateTime combineDateTime = DateTime.Parse(combine);
             var unixTimeSeconds = new DateTimeOffset(combineDateTime).ToUnixTimeSeconds();
-            System.Diagnostics.Trace.WriteLine(unixTimeSeconds);
+            //System.Diagnostics.Trace.WriteLine(unixTimeSeconds);
 
 
-            //return unixTimeSeconds.ToString();
+            return unixTimeSeconds.ToString();
+
+        }
+
+        private string getTimestampTime(DateTime time)
+        {
+            //string formatDate = date.ToString("yyyy-MM-dd");
+            string formatTime = time.ToString("hh:mm tt");
+
+
+            string combine = formatTime;
+            DateTime combineDateTime = DateTime.Parse(combine);
+            var unixTimeSeconds = new DateTimeOffset(combineDateTime).ToUnixTimeSeconds();
+            //System.Diagnostics.Trace.WriteLine(unixTimeSeconds);
+
+
+            return unixTimeSeconds.ToString();
 
         }
 
@@ -153,6 +271,17 @@ namespace vlapp
             {
                 dateCheckStatus = true;
             }
+        }
+
+        private bool timeChecker(DateTime? fromTime , DateTime? toTime)
+        {
+            bool status = false;
+            if(fromTime != null && toTime != null)
+            {
+                status = true;
+            }
+
+            return status;
         }
 
 
@@ -197,11 +326,13 @@ namespace vlapp
             checkBoxStatus();
         }
 
-        private void checkBoxStatus()
+        private List<int> checkBoxStatus()
         {
+            List<int> checkedDays = new List<int>();
             //all
             if (check_allDays.IsChecked == true)
             {
+                checkedDays.Add(8);
                 disableAllDays();
                 time_fromTime_all.IsEnabled = true;
                 time_toTime_all.IsEnabled = true;
@@ -216,6 +347,7 @@ namespace vlapp
             //monday
             if(check_monday.IsChecked == true)
             {
+                checkedDays.Add(1);
                 time_fromTime_monday.IsEnabled = true;
                 time_toTime_monday.IsEnabled= true;
             }
@@ -228,6 +360,7 @@ namespace vlapp
             //tuesday
             if (check_tuesday.IsChecked == true)
             {
+                checkedDays.Add(2);
                 time_fromTime_tuesday.IsEnabled = true;
                 time_toTime_tuesday.IsEnabled = true;
             }
@@ -240,6 +373,7 @@ namespace vlapp
             //wednesday
             if (check_wednesday.IsChecked == true)
             {
+                checkedDays.Add(3);
                 time_fromTime_wednesday.IsEnabled = true;
                 time_toTime_wednesday.IsEnabled = true;
             }
@@ -252,6 +386,7 @@ namespace vlapp
             //thursday
             if (check_thursday.IsChecked == true)
             {
+                checkedDays.Add(4);
                 time_fromTime_thursday.IsEnabled = true;
                 time_toTime_thursday.IsEnabled = true;
             }
@@ -264,6 +399,7 @@ namespace vlapp
             //friday
             if (check_friday.IsChecked == true)
             {
+                checkedDays.Add(5);
                 time_fromTime_friday.IsEnabled = true;
                 time_toTime_friday.IsEnabled = true;
             }
@@ -276,6 +412,7 @@ namespace vlapp
             //satruday
             if (check_saturday.IsChecked == true)
             {
+                checkedDays.Add(6);
                 time_fromTime_saturday.IsEnabled = true;
                 time_toTime_saturday.IsEnabled = true;
             }
@@ -288,6 +425,7 @@ namespace vlapp
             //sunday
             if (check_thursday.IsChecked == true)
             {
+                checkedDays.Add(7);
                 time_fromTime_sunday.IsEnabled = true;
                 time_toTime_sunday.IsEnabled = true;
             }
@@ -296,6 +434,8 @@ namespace vlapp
                 time_fromTime_sunday.IsEnabled = false;
                 time_toTime_sunday.IsEnabled = false;
             }
+
+            return checkedDays;
         }
 
         private void disableAllDays()
