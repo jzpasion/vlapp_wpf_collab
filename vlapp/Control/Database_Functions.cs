@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
+using vlapp.Models;
 
 namespace vlapp.Control
 {
@@ -384,6 +385,17 @@ namespace vlapp.Control
             string[] fields = { "start_time", "end_time", "day_id" };
             string[] values = {start_time , end_time , dayId.ToString() };
             insertData(tbl , fields , values);
+        }
+
+        public List<VideoListItem> getSchedule()
+        {
+            List<VideoListItem> schedList = new List<VideoListItem>();
+            MySqlDataReader readSched = collectData("tbl_schedule");
+            while (readSched.Read())
+            {
+                schedList.Add(new VideoListItem() { id = readSched.GetInt32(0), title = readSched.GetString(1), tfrom = readSched.GetString(2), tto = readSched.GetString(3) });
+            }
+            return schedList;
         }
     }
 }

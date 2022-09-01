@@ -162,6 +162,7 @@
                             <!--<TextBlock Text="From "  FontSize="15" FontWeight="Bold" Margin="5 20 5 0"/>-->
                             <materialDesign:TimePicker
                             x:Name="time_fromTime_all"
+                                Focusable="False"
                             Width="100" 
                             Margin="25 0 5 0"
                             Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
@@ -169,6 +170,7 @@
                             <!--<TextBlock Text="To "  FontSize="15" FontWeight="Bold" Margin="25 20 5 0"/>-->
                             <materialDesign:TimePicker
                             x:Name="time_toTime_all"
+                                Focusable="False"
                             Width="100" 
                             Margin="25 0 5 0"
                             Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
@@ -188,6 +190,7 @@
                             <!--<TextBlock Text="From "  FontSize="15" FontWeight="Bold" Margin="5 20 5 0"/>-->
                             <materialDesign:TimePicker
                             x:Name="time_fromTime_monday"
+                                Focusable="False"
                             Width="100" 
                             Margin="25 0 5 0"
                             Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
@@ -195,6 +198,7 @@
                             <!--<TextBlock Text="To "  FontSize="15" FontWeight="Bold" Margin="25 20 5 0"/>-->
                             <materialDesign:TimePicker
                             x:Name="time_toTime_monday"
+                                Focusable="False"
                             Width="100" 
                             Margin="25 0 5 0"
                             Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
@@ -214,6 +218,7 @@
                             <!--<TextBlock Text="From "  FontSize="15" FontWeight="Bold" Margin="5 20 5 0"/>-->
                             <materialDesign:TimePicker
                             x:Name="time_fromTime_tuesday"
+                                Focusable="False"
                             Width="100" 
                             Margin="25 0 5 0"
                             Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
@@ -221,6 +226,7 @@
                             <!--<TextBlock Text="To "  FontSize="15" FontWeight="Bold" Margin="25 20 5 0"/>-->
                             <materialDesign:TimePicker
                             x:Name="time_toTime_tuesday"
+                                Focusable="False"
                             Width="100" 
                             Margin="25 0 5 0"
                             Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
@@ -240,6 +246,7 @@
                             <!--<TextBlock Text="From "  FontSize="15" FontWeight="Bold" Margin="5 20 5 0"/>-->
                             <materialDesign:TimePicker
                             x:Name="time_fromTime_wednesday"
+                                Focusable="False"
                             Width="100" 
                             Margin="25 0 5 0"
                             Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
@@ -247,6 +254,7 @@
                             <!--<TextBlock Text="To "  FontSize="15" FontWeight="Bold" Margin="25 20 5 0"/>-->
                             <materialDesign:TimePicker
                             x:Name="time_toTime_wednesday"
+                                Focusable="False"
                             Width="100" 
                             Margin="25 0 5 0"
                             Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
@@ -266,6 +274,7 @@
                             <!--<TextBlock Text="From "  FontSize="15" FontWeight="Bold" Margin="5 20 5 0"/>-->
                             <materialDesign:TimePicker
                             x:Name="time_fromTime_thursday"
+                                Focusable="False"
                             Width="100" 
                             Margin="25 0 5 0"
                             Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
@@ -273,6 +282,7 @@
                             <!--<TextBlock Text="To "  FontSize="15" FontWeight="Bold" Margin="25 20 5 0"/>-->
                             <materialDesign:TimePicker
                             x:Name="time_toTime_thursday"
+                                Focusable="False"
                             Width="100" 
                             Margin="25 0 5 0"
                             Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
@@ -292,6 +302,7 @@
                             <!--<TextBlock Text="From "  FontSize="15" FontWeight="Bold" Margin="5 20 5 0"/>-->
                             <materialDesign:TimePicker
                             x:Name="time_fromTime_friday"
+                                Focusable="False"
                             Width="100" 
                             Margin="25 0 5 0"
                             Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
@@ -299,6 +310,7 @@
                             <!--<TextBlock Text="To "  FontSize="15" FontWeight="Bold" Margin="25 20 5 0"/>-->
                             <materialDesign:TimePicker
                             x:Name="time_toTime_friday"
+                                Focusable="False"
                             Width="100" 
                             Margin="25 0 5 0"
                             Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
@@ -318,6 +330,7 @@
                             <!--<TextBlock Text="From "  FontSize="15" FontWeight="Bold" Margin="5 20 5 0"/>-->
                             <materialDesign:TimePicker
                             x:Name="time_fromTime_saturday"
+                                Focusable="False"
                             Width="100" 
                             Margin="25 0 5 0"
                             Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
@@ -325,6 +338,7 @@
                             <!--<TextBlock Text="To "  FontSize="15" FontWeight="Bold" Margin="25 20 5 0"/>-->
                             <materialDesign:TimePicker
                             x:Name="time_toTime_saturday"
+                                Focusable="False"
                             Width="100" 
                             Margin="25 0 5 0"
                             Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
@@ -344,6 +358,7 @@
                             <!--<TextBlock Text="From "  FontSize="15" FontWeight="Bold" Margin="5 20 5 0"/>-->
                             <materialDesign:TimePicker
                             x:Name="time_fromTime_sunday"
+                                Focusable="False"
                             Width="100" 
                             Margin="25 0 5 0"
                             Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
@@ -351,6 +366,7 @@
                             <!--<TextBlock Text="To "  FontSize="15" FontWeight="Bold" Margin="25 20 5 0"/>-->
                             <materialDesign:TimePicker
                             x:Name="time_toTime_sunday"
+                                Focusable="False"
                             Width="100" 
                             Margin="25 0 5 0"
                             Style="{StaticResource MaterialDesignFloatingHintTimePicker}"
@@ -479,12 +495,14 @@
                                 <TextBlock x:Name="ta" >
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="TextWrapping" Value="Wrap" />
                                             <Setter Property="HorizontalAlignment" Value="Center"/>
                                             <Setter Property="VerticalAlignment" Value="Center"/>
                                             <Setter Property="Foreground" Value="Black"/>
                                             <Setter Property="Text" Value="{Binding title}"/>
-                                            <Setter Property="FontSize" Value="30" />
-                                            <Setter Property="Margin" Value="40" />
+                                            <Setter Property="FontSize" Value="20" />
+                                            <Setter Property="FontWeight" Value="Bold" />
+                                            <Setter Property="Margin" Value="5" />
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>

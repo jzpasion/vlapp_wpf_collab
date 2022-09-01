@@ -31,6 +31,7 @@ namespace vlapp
         public MainWindow()
         {
             InitializeComponent();
+            Database_Functions.connectDb();
             frame.Navigate(new Uri("Upload_Page.xaml", UriKind.RelativeOrAbsolute));
 
         }
@@ -63,7 +64,7 @@ namespace vlapp
             dispatcherTimer.Tick += connectionStatus;
             dispatcherTimer.Interval = new TimeSpan(0, 0, 2);
             dispatcherTimer.Start();
-            Database_Functions.connectDb();
+          
         }
 
         private void connectionStatus(object sender, EventArgs e)
