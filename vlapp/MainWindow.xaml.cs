@@ -17,6 +17,7 @@ using System.IO;
 using Microsoft.Win32;
 using System.Threading;
 using vlapp.Models;
+using vlapp.Control;
 
 namespace vlapp
 {
@@ -62,6 +63,7 @@ namespace vlapp
             dispatcherTimer.Tick += connectionStatus;
             dispatcherTimer.Interval = new TimeSpan(0, 0, 2);
             dispatcherTimer.Start();
+            Database_Functions.connectDb();
         }
 
         private void connectionStatus(object sender, EventArgs e)
