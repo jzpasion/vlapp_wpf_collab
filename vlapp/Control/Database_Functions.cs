@@ -114,15 +114,15 @@ namespace vlapp.Control
             }
         }
 
-        public string updateData(string tbl, string[] fields, string[] values, string[] fCondition, string[] vCondition)
+        public long updateData(string tbl, string[] fields, string[] values, string[] fCondition, string[] vCondition)
         {
             if (fields.Length != values.Length)
             {
-                return "fields and values must be the same count";
+                return 0;
             }
             else if (fCondition.Length != vCondition.Length)
             {
-                return "condition field and condition values musbt be the same count";
+                return 0;
             }
             else {
                 try
@@ -162,13 +162,13 @@ namespace vlapp.Control
                     }
                     sbQuery.Append(';');
 
-                    MySqlDataReader reader = excecuteQuery(sbQuery.ToString());
+                    long lastId = executeQueryWithReturnId(sbQuery.ToString());
                     closeDb(con);
-                    return "updated successfully";
+                    return lastId;
                 }
                 catch (Exception)
                 {
-                    return "updating failed";
+                    return 0;
                 }
             }
         }
