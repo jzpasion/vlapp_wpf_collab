@@ -12,20 +12,21 @@ namespace vlapp.Control
     {
         public static MySqlConnection con;
         public static string connectDb() {
+            string connected = "not connected";
             try
             {
                 string cs = @"server=192.168.1.71;userid=testpro;password=1234567890;database=testpro";
-
                 con = new MySqlConnection(cs);
                 openDb(con);
-                string version = con.ServerVersion;
+                //string version = con.ServerVersion;
+                connected = "connected";
                 closeDb(con); 
-                return version;
             }
             catch (Exception)
             {
-                return "cant connect";
+                connected = "not connected";
             }
+            return connected;
         }
 
         public static string closeDb(MySqlConnection exCon) {
@@ -348,6 +349,11 @@ namespace vlapp.Control
             string[] vCondition = { values[0], values[5] };
             int cnt = 0;
             MySqlDataReader collection = collectData(tbl, fields, fCondition, vCondition);
+            if (collection == null) 
+            { 
+                return 0; 
+            }
+
             while (collection.Read()) { 
                 cnt++;
             }
@@ -394,6 +400,10 @@ namespace vlapp.Control
             string[] vCondition = { values[0], values[1], values[6] };
             int cnt = 0;
             MySqlDataReader collection = collectData(tbl, fields, fCondition, vCondition);
+            if (collection == null)
+            {
+                return 0;
+            }
             while (collection.Read()) 
             {
                 cnt++;

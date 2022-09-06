@@ -72,11 +72,6 @@ namespace vlapp
         //    }
         //}
 
-        private void resetBlindProps() 
-        {
-            
-        }
-
         //blind 1
         private void sliderb1_all_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
@@ -431,14 +426,13 @@ namespace vlapp
                     txt_EspNumber.Content = "Selected Esp ID: "+element.nodeIndex.ToString();
                     txt_BlindNumber.Content = "Number of blinds: "+ element.BlindNumber.ToString();
                     tempIp = element.BlindIp[0]+"."+element.BlindIp[1]+"."+element.BlindIp[2]+"."+element.BlindIp[3];
-                    string conCheck = Database_Functions.connectDb();
-                    //if (conCheck != "connected") 
-                    //{
-                    //    MessageBox.Show("database not available");
-                    //    return;
-                    //}
                     Database_Functions fDb = new Database_Functions();
-                    List<BlindItem> blindItems = new List<BlindItem>(fDb.getBlindProps(tempIp));
+                    var bItems = fDb.getBlindProps(tempIp);
+                    if (bItems == null) {
+                        MessageBox.Show("The database is not available");
+                        return;
+                    }
+                    List<BlindItem> blindItems = new List<BlindItem>(bItems);
                     Helper lHelper = new Helper();
                     
 
@@ -561,9 +555,14 @@ namespace vlapp
             slider_popup_blue.Value = 0;
         }
 
-        private void setPopupSliderProps() {
+        private int setPopupSliderProps() {
             Database_Functions fDb = new Database_Functions();
-            List<ModuleItem> moduleItems = new List<ModuleItem>(fDb.getModuleProps(tempIp, blindIDHolder));
+            var mItems = fDb.getModuleProps(tempIp, blindIDHolder);
+            if (mItems == null) {
+                MessageBox.Show("The database is not available");
+                return 0;
+            }
+            List<ModuleItem> moduleItems = new List<ModuleItem>(mItems);
             Helper lHelper = new Helper();
 
             if (moduleItems != null)
@@ -571,6 +570,7 @@ namespace vlapp
                 object[] sliders = { slider_popup_all, slider_popup_red, slider_popup_green, slider_popup_blue };
                 lHelper.applyModuleProps(blindIDHolder, moduleIndex, moduleItems, sliders);
             }
+            return 1;
         }
 
         private void btn_module1_Click_1(object sender, RoutedEventArgs e)
@@ -591,7 +591,11 @@ namespace vlapp
                     txt_BlindNumber_popup.Content = "Blind ID: "+ blindIDHolder.ToString();
                     txt_ModuleNumber_popup.Content = "Module Number: "+moduleIndex.ToString();
 
-                    setPopupSliderProps();
+                    int temp = setPopupSliderProps();
+                    if (temp == 0) 
+                    {
+                        return;
+                    }
 
                     popup_BrightnessChange.IsOpen = true;
                 }
@@ -616,7 +620,11 @@ namespace vlapp
                     txt_BlindNumber_popup.Content = "Blind ID: " + blindIDHolder.ToString();
                     txt_ModuleNumber_popup.Content = "Module Number: " + moduleIndex.ToString();
 
-                    setPopupSliderProps();
+                    int temp = setPopupSliderProps();
+                    if (temp == 0)
+                    {
+                        return;
+                    }
 
                     popup_BrightnessChange.IsOpen = true;
                 }
@@ -641,7 +649,11 @@ namespace vlapp
                     txt_BlindNumber_popup.Content = "Blind ID: " + blindIDHolder.ToString();
                     txt_ModuleNumber_popup.Content = "Module Number: " + moduleIndex.ToString();
 
-                    setPopupSliderProps();
+                    int temp = setPopupSliderProps();
+                    if (temp == 0)
+                    {
+                        return;
+                    }
 
                     popup_BrightnessChange.IsOpen = true;
                 }
@@ -666,7 +678,11 @@ namespace vlapp
                     txt_BlindNumber_popup.Content = "Blind ID: " + blindIDHolder.ToString();
                     txt_ModuleNumber_popup.Content = "Module Number: " + moduleIndex.ToString();
 
-                    setPopupSliderProps();
+                    int temp = setPopupSliderProps();
+                    if (temp == 0)
+                    {
+                        return;
+                    }
 
                     popup_BrightnessChange.IsOpen = true;
                 }
