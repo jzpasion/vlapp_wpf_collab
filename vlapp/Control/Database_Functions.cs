@@ -252,7 +252,7 @@ namespace vlapp.Control
             }
             catch (Exception)
             {
-                throw;
+                return null;
             }
         }
 
@@ -286,7 +286,7 @@ namespace vlapp.Control
             }
             catch (Exception)
             {
-                throw;
+                return null;
             }
         }
 
@@ -335,7 +335,7 @@ namespace vlapp.Control
             }
             catch (Exception)
             {
-                throw;
+                return null;
             }
         }
 
@@ -356,10 +356,58 @@ namespace vlapp.Control
             {
                 return insertData(tbl, fields, values);
             }
-            else {
+            else 
+            {
                 //data is existing
                 updateData(tbl, fields, values, fCondition, vCondition);
                 return 9999;
+            }
+        }
+
+        public int resetBlindConfig(string ip, int blindId) {
+            string tbl = "tbl_blind";
+            string tbl_2 = "tbl_module";
+            string[] fields = { "red_val", "green_val", "blue_val", "current_gain" };
+            string[] values = { "0", "0", "0", "0" };
+            string[] fCondition = { "ip", "blind_index" };
+            string[] vCondition = { ip, blindId.ToString() };
+
+            long bTbl = updateData(tbl, fields, values, fCondition, vCondition);
+            if (bTbl == 0) 
+            {
+                return 0;
+            }
+            long mTbl = updateData(tbl_2, fields, values, fCondition, vCondition);
+            if (mTbl == 0) 
+            {
+                return 0;
+            }
+            return 1;
+        }
+
+        public long moduleConfig(string ip, int blindId, int moduleId, int redVal, int greenVal, int blueVal, int currVal) 
+        {
+            string tbl = "tbl_module";
+            string[] fields = { "blind_index", "module_index", "red_val", "green_val", "blue_val", "current_gain", "ip" };
+            string[] values = { blindId.ToString(), moduleId.ToString(), redVal.ToString(), greenVal.ToString(), blueVal.ToString(), currVal.ToString(), ip };
+            string[] fCondition = { fields[0], fields[1], fields[6] };
+            string[] vCondition = { values[0], values[1], values[6] };
+            int cnt = 0;
+            MySqlDataReader collection = collectData(tbl, fields, fCondition, vCondition);
+            while (collection.Read()) 
+            {
+                cnt++;
+            }
+
+            if (cnt == 0)
+            {
+                return insertData(tbl, fields, values);
+            }
+            else 
+            {
+                //data is existing
+                updateData(tbl, fields, values, fCondition, vCondition);
+                return 9999;        
             }
         }
 
@@ -391,11 +439,60 @@ namespace vlapp.Control
         {
             List<VideoListItem> schedList = new List<VideoListItem>();
             MySqlDataReader readSched = collectData("tbl_schedule");
-            while (readSched.Read())
+            if (readSched != null)
             {
-                schedList.Add(new VideoListItem() { id = readSched.GetInt32(0), title = readSched.GetString(1), tfrom = readSched.GetString(2), tto = readSched.GetString(3) });
+                while (readSched.Read())
+                {
+                    schedList.Add(new VideoListItem() { id = readSched.GetInt32(0), title = readSched.GetString(1), tfrom = readSched.GetString(2), tto = readSched.GetString(3) });
+                }
+                return schedList;
             }
-            return schedList;
+            else
+            {
+                return null;
+            }
+        }
+
+        public List<BlindItem> getBlindProps(string ip) { 
+            List<BlindItem> blindList = new List<BlindItem>();
+            string tbl = "tbl_blind";
+            string[] fields = { "blind_index", "red_val", "green_val", "blue_val", "current_gain" };
+            string[] fCondition = { "ip" };
+            string[] vCondition = { ip };
+            MySqlDataReader readBlind = collectData(tbl, fields, fCondition, vCondition);
+            if (readBlind != null)
+            {
+                while (readBlind.Read())
+                {
+                    blindList.Add(new BlindItem() { index = readBlind.GetInt32(0), redVal = readBlind.GetInt32(1), greenVal = readBlind.GetInt32(2), blueVal = readBlind.GetInt32(3), currentGain = readBlind.GetInt32(4) });
+                }
+                return blindList;
+            }
+            else
+            {
+                return null;            
+            }
+        }
+
+        public List<ModuleItem> getModuleProps(string ip, int blindIndex) { 
+            List <ModuleItem> moduleList = new List<ModuleItem>();
+            string tbl = "tbl_module";
+            string[] fields = { "blind_index", "module_index", "red_val", "green_val", "blue_val", "current_gain" };
+            string[] fCondition = { "ip", "blind_index" };
+            string[] vCondition = { ip, blindIndex.ToString() };
+            MySqlDataReader readModule = collectData(tbl, fields, fCondition, vCondition);
+            if (readModule != null)
+            {
+                while (readModule.Read())
+                {
+                    moduleList.Add(new ModuleItem() { blindIndex = readModule.GetInt32(0), moduleIndex = readModule.GetInt32(1), redVal = readModule.GetInt32(2), greenVal = readModule.GetInt32(3), blueVal = readModule.GetInt32(4), currentGain = readModule.GetInt32(5) });
+                }
+                return moduleList;
+            }
+            else
+            {
+                return null;            
+            }
         }
     }
 }

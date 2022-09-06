@@ -33,6 +33,7 @@ namespace vlapp
         int redVal_1, redVal_2, redVal_3, redVal_4;
         int greenVal_1, greenVal_2, greenVal_3, greenVal_4;
         int blueVal_1, blueVal_2, blueVal_3, blueVal_4;
+        int popCurrentGain, popRedVal, popGreenVal, popBlueVal;
         public Brightness_Page()
         {
             InitializeComponent();
@@ -71,20 +72,9 @@ namespace vlapp
         //    }
         //}
 
-        private void applyConfig(int blindIndex, int redVal, int greenVal, int blueVal, int currVal) {
-            //add send rgb and current gain to esp
-            //save to database
-            Database_Functions fDb = new Database_Functions();
-            long x = fDb.blindConfig(tempIp, blindIndex, redVal, greenVal, blueVal, currVal);
-            //9999 means data is existing
-            if (x != 0)
-            {
-                MessageBox.Show("success");
-            }
-            else
-            {
-                MessageBox.Show("failed");
-            }
+        private void resetBlindProps() 
+        {
+            
         }
 
         //blind 1
@@ -117,21 +107,42 @@ namespace vlapp
         }
         private void btn_save_blind1_brightness_Click(object sender, RoutedEventArgs e)
         {
-            applyConfig(1, redVal_1, greenVal_1, blueVal_1, currentGain_1);
-        }
+            Helper lHelper = new Helper();
+            int y = lHelper.applyBlindConfig(tempIp, 1, redVal_1, greenVal_1, blueVal_1, currentGain_1);
+            if (y == 1)
+            {
+                MessageBox.Show("successfuly saved");
+            }
+            else
+            {
+                MessageBox.Show("saving failed");
+            }
+         }
 
         private void btn_reset_blind1_brightness_Click(object sender, RoutedEventArgs e)
         {
-            //Database_Functions fDb = new Database_Functions();
-
-            //long x = fDb.saveBlindConfig(tempIp, 1, 1, 1, 1, 1);
-            //string tbl = "tbl_blind";
-            //string[] fields = { "red_val" };
-            //string[] values = { "99" };
-            //string[] fCondition = { "ip" };
-            //string[] vCondition = { "192.168.1.7" };
-            //long lastId = fDb.updateData(tbl, fields, values, fCondition, vCondition);
-            //MessageBox.Show(lastId.ToString());
+            MessageBoxResult dialogResult = MessageBox.Show("You are about to reset this blinds RGB and Current gain values and all its modules to zero.", "Are you sure?", MessageBoxButton.YesNo);
+            if (dialogResult == MessageBoxResult.Yes)
+            {
+                Database_Functions fDb = new Database_Functions();
+                long x = fDb.resetBlindConfig(tempIp, 1);
+                if (x == 0)
+                {
+                    MessageBox.Show("resetting failed");
+                }
+                else
+                {
+                    MessageBox.Show("successfully reset");
+                    sliderb1_all.Value = 0;
+                    sliderb1_red.Value = 0;
+                    sliderb1_green.Value = 0;
+                    sliderb1_blue.Value = 0;
+                }
+            }
+            else if (dialogResult == MessageBoxResult.No)
+            {
+                //do nothing
+            }
         }
 
         //blind 2
@@ -165,7 +176,42 @@ namespace vlapp
 
         private void btn_save_blind2_brightness_Click(object sender, RoutedEventArgs e)
         {
-            applyConfig(2, redVal_2, greenVal_2, blueVal_2, currentGain_2);
+            Helper lHelper = new Helper();
+            int y = lHelper.applyBlindConfig(tempIp, 2, redVal_2, greenVal_2, blueVal_2, currentGain_2);
+            if (y == 1)
+            {
+                MessageBox.Show("successfuly saved");
+            }
+            else
+            {
+                MessageBox.Show("saving failed");
+            }
+        }
+
+        private void btn_reset_blind2_brightness_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult dialogResult = MessageBox.Show("You are about to reset this blinds RGB and Current gain values and all its modules to zero.", "Are you sure?", MessageBoxButton.YesNo);
+            if (dialogResult == MessageBoxResult.Yes)
+            {
+                Database_Functions fDb = new Database_Functions();
+                long x = fDb.resetBlindConfig(tempIp, 2);
+                if (x == 0)
+                {
+                    MessageBox.Show("resetting failed");
+                }
+                else
+                {
+                    MessageBox.Show("successfully reset");
+                    sliderb2_all.Value = 0;
+                    sliderb2_red.Value = 0;
+                    sliderb2_green.Value = 0;
+                    sliderb2_blue.Value = 0;
+                }
+            }
+            else if (dialogResult == MessageBoxResult.No)
+            {
+                //do nothing
+            }
         }
 
         //blind 3
@@ -199,7 +245,41 @@ namespace vlapp
 
         private void btn_save_blind3_brightness_Click(object sender, RoutedEventArgs e)
         {
-            applyConfig(3, redVal_3, greenVal_3, blueVal_3, currentGain_3);
+            Helper lHelper = new Helper();
+            int y = lHelper.applyBlindConfig(tempIp, 3, redVal_3, greenVal_3, blueVal_3, currentGain_3);
+            if (y == 1)
+            {
+                MessageBox.Show("successfuly saved");
+            }
+            else
+            {
+                MessageBox.Show("saving failed");
+            }
+        }
+        private void btn_reset_blind3_brightness_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult dialogResult = MessageBox.Show("You are about to reset this blinds RGB and Current gain values and all its modules to zero.", "Are you sure?", MessageBoxButton.YesNo);
+            if (dialogResult == MessageBoxResult.Yes)
+            {
+                Database_Functions fDb = new Database_Functions();
+                long x = fDb.resetBlindConfig(tempIp, 3);
+                if (x == 0)
+                {
+                    MessageBox.Show("resetting failed");
+                }
+                else
+                {
+                    MessageBox.Show("successfully reset");
+                    sliderb3_all.Value = 0;
+                    sliderb3_red.Value = 0;
+                    sliderb3_green.Value = 0;
+                    sliderb3_blue.Value = 0;
+                }
+            }
+            else if (dialogResult == MessageBoxResult.No)
+            {
+                //do nothing
+            }
         }
 
         //blind 4
@@ -233,7 +313,40 @@ namespace vlapp
 
         private void btn_save_blind4_brightness_Click(object sender, RoutedEventArgs e)
         {
-            applyConfig(4, redVal_4, greenVal_4, blueVal_4, currentGain_4);
+            Helper lHelper = new Helper();
+            int y = lHelper.applyBlindConfig(tempIp, 4, redVal_4, greenVal_4, blueVal_4, currentGain_4);
+            if (y == 1)
+            {
+                MessageBox.Show("successfuly saved");
+            }
+            else {
+                MessageBox.Show("saving failed");
+            }
+        }
+        private void btn_reset_blind4_brightness_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult dialogResult = MessageBox.Show("You are about to reset this blinds RGB and Current gain values and all its modules to zero.", "Are you sure?", MessageBoxButton.YesNo);
+            if (dialogResult == MessageBoxResult.Yes)
+            {
+                Database_Functions fDb = new Database_Functions();
+                long x = fDb.resetBlindConfig(tempIp, 4);
+                if (x == 0)
+                {
+                    MessageBox.Show("resetting failed");
+                }
+                else
+                {
+                    MessageBox.Show("successfully reset");
+                    sliderb4_all.Value = 0;
+                    sliderb4_red.Value = 0;
+                    sliderb4_green.Value = 0;
+                    sliderb4_blue.Value = 0;
+                }
+            }
+            else if (dialogResult == MessageBoxResult.No)
+            {
+                //do nothing
+            }
         }
 
         //pop up
@@ -241,24 +354,47 @@ namespace vlapp
         {
             int value = Convert.ToInt32(slider_popup_all.Value);
             txt_popup_all.Text = "Current gain: " + value;
+            popCurrentGain = value;
         }
 
         private void slider_popup_red_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             int value = Convert.ToInt32(slider_popup_red.Value);
             txt_popup_red.Text = "Red: " + value;
+            popRedVal = value;
         }
 
         private void slider_popup_green_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             int value = Convert.ToInt32(slider_popup_green.Value);
             txt_popup_green.Text = "Green: " + value;
+            popGreenVal = value;
         }
 
         private void slider_popup_blue_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             int value = Convert.ToInt32(slider_popup_blue.Value);
             txt_popup_blue.Text = "Blue: " + value;
+            popBlueVal = value;
+        }
+        private void btn_save_Click(object sender, RoutedEventArgs e)
+        {
+            Helper lHelper = new Helper();
+            int y = lHelper.applyModuleConfig(tempIp, blindIDHolder, moduleIndex, popRedVal, popGreenVal, popBlueVal, popCurrentGain);
+            if (y == 1)
+            {
+                MessageBox.Show("successfuly saved");
+            }
+            else
+            {
+                MessageBox.Show("saving failed");
+            }
+            popup_BrightnessChange.IsOpen = false;
+        }
+
+        private void btn_cancel_Click(object sender, RoutedEventArgs e)
+        {
+            popup_BrightnessChange.IsOpen = false;
         }
 
         private List<ModuleModel> displayModule()
@@ -279,17 +415,13 @@ namespace vlapp
            return modules;
         }
 
-
-
         private void btn_esp_Click(object sender, RoutedEventArgs e)
         {
             Button? btn = sender as Button;
-
-
+            
             if (btn != null)
             {
                 object item = btn.DataContext;
-
 
                 if (item != null)
                 {
@@ -299,13 +431,26 @@ namespace vlapp
                     txt_EspNumber.Content = "Selected Esp ID: "+element.nodeIndex.ToString();
                     txt_BlindNumber.Content = "Number of blinds: "+ element.BlindNumber.ToString();
                     tempIp = element.BlindIp[0]+"."+element.BlindIp[1]+"."+element.BlindIp[2]+"."+element.BlindIp[3];
+                    string conCheck = Database_Functions.connectDb();
+                    //if (conCheck != "connected") 
+                    //{
+                    //    MessageBox.Show("database not available");
+                    //    return;
+                    //}
+                    Database_Functions fDb = new Database_Functions();
+                    List<BlindItem> blindItems = new List<BlindItem>(fDb.getBlindProps(tempIp));
+                    Helper lHelper = new Helper();
+                    
 
-
-                    switch(element.BlindNumber)
+                    switch (element.BlindNumber)
                     {
                         case 1:
                             resetSliders();
                             blind_1.IsEnabled = true;
+                            if (blindItems != null) {
+                                object[] sliders = { sliderb1_all, sliderb1_red, sliderb1_green, sliderb1_blue };
+                                lHelper.applyBlindProps(1, blindItems, sliders);
+                            }
                             blind_2.IsEnabled = false;
                             blind_3.IsEnabled = false;
                             blind_4.IsEnabled = false;
@@ -313,23 +458,68 @@ namespace vlapp
                         case 2:
                             resetSliders();
                             blind_1.IsEnabled = true;
+                            if (blindItems != null)
+                            {
+                                object[] sliders = { sliderb1_all, sliderb1_red, sliderb1_green, sliderb1_blue };
+                                lHelper.applyBlindProps(1, blindItems, sliders);
+                            }
                             blind_2.IsEnabled = true;
+                            if (blindItems != null)
+                            {
+                                object[] sliders = { sliderb2_all, sliderb2_red, sliderb2_green, sliderb2_blue };
+                                lHelper.applyBlindProps(2, blindItems, sliders);
+                            }
                             blind_3.IsEnabled = false;
                             blind_4.IsEnabled = false;
                             break;
                         case 3:
                             resetSliders();
                             blind_1.IsEnabled = true;
+                            if (blindItems != null)
+                            {
+                                object[] sliders = { sliderb1_all, sliderb1_red, sliderb1_green, sliderb1_blue };
+                                lHelper.applyBlindProps(1, blindItems, sliders);
+                            }
                             blind_2.IsEnabled = true;
+                            if (blindItems != null)
+                            {
+                                object[] sliders = { sliderb2_all, sliderb2_red, sliderb2_green, sliderb2_blue };
+                                lHelper.applyBlindProps(2, blindItems, sliders);
+                            }
                             blind_3.IsEnabled = true;
+                            if (blindItems != null)
+                            {
+                                object[] sliders = { sliderb3_all, sliderb3_red, sliderb3_green, sliderb3_blue };
+                                lHelper.applyBlindProps(3, blindItems, sliders);
+                            }
                             blind_4.IsEnabled = false;
                             break;
                         case 4:
                             resetSliders();
                             blind_1.IsEnabled = true;
+                            if (blindItems != null)
+                            {
+                                object[] sliders = { sliderb1_all, sliderb1_red, sliderb1_green, sliderb1_blue };
+                                lHelper.applyBlindProps(1, blindItems, sliders);
+                            }
                             blind_2.IsEnabled = true;
+                            if (blindItems != null)
+                            {
+                                object[] sliders = { sliderb2_all, sliderb2_red, sliderb2_green, sliderb2_blue };
+                                lHelper.applyBlindProps(2, blindItems, sliders);
+                            }
                             blind_3.IsEnabled = true;
+                            if (blindItems != null)
+                            {
+                                object[] sliders = { sliderb3_all, sliderb3_red, sliderb3_green, sliderb3_blue };
+                                lHelper.applyBlindProps(3, blindItems, sliders);
+                            }
                             blind_4.IsEnabled = true;
+                            if (blindItems != null)
+                            {
+                                object[] sliders = { sliderb4_all, sliderb4_red, sliderb4_green, sliderb4_blue };
+                                lHelper.applyBlindProps(4, blindItems, sliders);
+                            }
                             break;
                     }
 
@@ -338,11 +528,6 @@ namespace vlapp
 
                 }
             }
-        }
-
-        private void btn_cancel_Click(object sender, RoutedEventArgs e)
-        {
-            popup_BrightnessChange.IsOpen = false;
         }
 
         private void resetSliders()
@@ -368,6 +553,26 @@ namespace vlapp
             sliderb4_red.Value = 0;
         }
 
+        private void resetPopSliders() 
+        {
+            slider_popup_all.Value = 0;
+            slider_popup_red.Value = 0;
+            slider_popup_green.Value = 0;
+            slider_popup_blue.Value = 0;
+        }
+
+        private void setPopupSliderProps() {
+            Database_Functions fDb = new Database_Functions();
+            List<ModuleItem> moduleItems = new List<ModuleItem>(fDb.getModuleProps(tempIp, blindIDHolder));
+            Helper lHelper = new Helper();
+
+            if (moduleItems != null)
+            {
+                object[] sliders = { slider_popup_all, slider_popup_red, slider_popup_green, slider_popup_blue };
+                lHelper.applyModuleProps(blindIDHolder, moduleIndex, moduleItems, sliders);
+            }
+        }
+
         private void btn_module1_Click_1(object sender, RoutedEventArgs e)
         {
             Button? btn = sender as Button;
@@ -379,11 +584,14 @@ namespace vlapp
 
                 if (item != null)
                 {
+                    resetPopSliders();
                     moduleIndex = this.listbox_module_1.Items.IndexOf(item)+1;
                     blindIDHolder = 1;
 
                     txt_BlindNumber_popup.Content = "Blind ID: "+ blindIDHolder.ToString();
                     txt_ModuleNumber_popup.Content = "Module Number: "+moduleIndex.ToString();
+
+                    setPopupSliderProps();
 
                     popup_BrightnessChange.IsOpen = true;
                 }
@@ -401,11 +609,14 @@ namespace vlapp
 
                 if (item != null)
                 {
+                    resetPopSliders();
                     moduleIndex = this.listbox_module_2.Items.IndexOf(item) + 1;
                     blindIDHolder = 2;
 
                     txt_BlindNumber_popup.Content = "Blind ID: " + blindIDHolder.ToString();
                     txt_ModuleNumber_popup.Content = "Module Number: " + moduleIndex.ToString();
+
+                    setPopupSliderProps();
 
                     popup_BrightnessChange.IsOpen = true;
                 }
@@ -423,11 +634,14 @@ namespace vlapp
 
                 if (item != null)
                 {
+                    resetPopSliders();
                     moduleIndex = this.listbox_module_3.Items.IndexOf(item) + 1;
                     blindIDHolder = 3;
 
                     txt_BlindNumber_popup.Content = "Blind ID: " + blindIDHolder.ToString();
                     txt_ModuleNumber_popup.Content = "Module Number: " + moduleIndex.ToString();
+
+                    setPopupSliderProps();
 
                     popup_BrightnessChange.IsOpen = true;
                 }
@@ -445,11 +659,14 @@ namespace vlapp
 
                 if (item != null)
                 {
+                    resetPopSliders();
                     moduleIndex = this.listbox_module_4.Items.IndexOf(item) + 1;
                     blindIDHolder = 4;
 
                     txt_BlindNumber_popup.Content = "Blind ID: " + blindIDHolder.ToString();
                     txt_ModuleNumber_popup.Content = "Module Number: " + moduleIndex.ToString();
+
+                    setPopupSliderProps();
 
                     popup_BrightnessChange.IsOpen = true;
                 }
