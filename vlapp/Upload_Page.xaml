@@ -152,7 +152,7 @@
                         <StackPanel x:Name="day_all" Orientation="Horizontal" IsEnabled="True">
                             <CheckBox
                                 x:Name="check_allDays"
-                                IsChecked="True"
+                                IsChecked="False"
                                 Margin="10"
                                 Style="{StaticResource MaterialDesignCheckBox}" Click="check_allDays_Click"/>
                             <materialDesign:Chip Margin="5 15 29 15" FontSize="15" FontWeight="Bold" Content="All Days" />
@@ -489,8 +489,8 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Border BorderBrush="Black" BorderThickness="3" CornerRadius="10">
-                            <Button x:Name="btn_esp" materialDesign:ShadowAssist.ShadowDepth="Depth1" materialDesign:ShadowAssist.ShadowEdges="Top" Background="Transparent" BorderBrush="Transparent"
-                      Width="175" Height="175">
+                            <Button x:Name="btn_videos" materialDesign:ShadowAssist.ShadowDepth="Depth1" materialDesign:ShadowAssist.ShadowEdges="Top" Background="Transparent" BorderBrush="Transparent"
+                      Width="175" Height="100" Click="btn_videos_Click" >
 
                                 <TextBlock x:Name="ta" >
                                     <TextBlock.Style>

@@ -429,19 +429,12 @@ namespace vlapp.Control
             return insertData(tbl, fields, values);
         }
 
-        public long saveDay(int day, int schedId)
-        {
-            string tbl = "tbl_day";
-            string[] fields = { "day", "schedule_id" };
-            string[] values = { day.ToString(), schedId.ToString() };
-            return insertData(tbl, fields, values);
-        }
 
-        public void saveTime(string start_time , string end_time , int dayId)
+        public void saveTime(string start_time , string end_time , int day , int sched_id)
         {
             string tbl = "tbl_time";
-            string[] fields = { "start_time", "end_time", "day_id" };
-            string[] values = {start_time , end_time , dayId.ToString() };
+            string[] fields = { "start_time", "end_time", "day" , "schedule_id"};
+            string[] values = {start_time , end_time , day.ToString() , sched_id.ToString() };
             insertData(tbl , fields , values);
         }
 
@@ -504,5 +497,84 @@ namespace vlapp.Control
                 return null;            
             }
         }
+
+        public List<TimeListItem> getTimeListOf(int sched_id)
+        {
+            List<TimeListItem> TimeList = new List<TimeListItem>();
+            string tbl = "tbl_time";
+            string[] fields = { "start_time" , "end_time" , "day" , "schedule_id" };
+            string[] fCondition = { "schedule_id" };
+            string[] vCondition = { sched_id.ToString() };
+            MySqlDataReader readTime = collectData(tbl, fields, fCondition, vCondition);
+            if (readTime != null)
+            {
+                while (readTime.Read())
+                {
+                    TimeList.Add(new TimeListItem() { from_time = readTime.GetString(0) , to_time= readTime.GetString(1), day = readTime.GetInt32(2) , schedule_id = readTime.GetInt32(3) });
+                }
+                return TimeList;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+
+        public long scheduleUpdate(string title, string from , string to, int id)
+        {
+            string tbl = "tbl_schedule";
+            string[] fields = { "title" , "start_date" , "end_date" };
+            string[] values = { title , from , to  };
+            string[] fCondition = { "id" };
+            string[] vCondition = { id.ToString() };
+            int cnt = 0;
+
+            //data is existing
+            updateData(tbl, fields, values, fCondition, vCondition);
+            return 9999;
+        }
+
+
+        public long updateTime(string fTime , string eTime , int day , int sched_id)
+        {
+            string tbl = "tbl_time";
+            string[] fields = { "start_time" , "end_time" , "day" , "schedule_id" };
+            string[] values = { fTime, eTime, day.ToString(), sched_id.ToString() };
+            string[] fCondition = { "schedule_id" , "day" };
+            string[] vCondition = { sched_id.ToString(), day.ToString() };
+            int cnt = 0;
+            MySqlDataReader collection = collectData(tbl, fields, fCondition, vCondition);
+            if (collection == null)
+            {
+                return 0;
+            }
+            while (collection.Read())
+            {
+                cnt++;
+            }
+
+            if (cnt == 0)
+            {
+                return insertData(tbl, fields, values);
+            }
+            else
+            {
+                //data is existing
+                updateData(tbl, fields, values, fCondition, vCondition);
+                return 9999;
+            }
+        }
+
+        public string deleteDays(int day , int sched_id)
+        {
+            string tbl = "tbl_time";
+            string[] fCondition = { "schedule_id" , "day" };
+            string[] vCondition = { sched_id.ToString() , day.ToString() };
+
+            return deleteData(tbl, fCondition, vCondition);
+            
+        }
+
     }
 }
