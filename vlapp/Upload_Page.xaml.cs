@@ -49,21 +49,24 @@ namespace vlapp
 
         private void btn_file_open_Click(object sender, RoutedEventArgs e)
         {
+
            OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "All Media Files|*.wav;*.aac;*.wma;*.wmv;*.avi;*.mpg;*.mpeg;*.m1v;*.mp2;*.mp3;*.mpa;*.mpe;*.m3u;*.mp4;*.mov;*.3g2;*.3gp2;*.3gp;*.3gpp;*.m4a;*.cda;*.aif;*.aifc;*.aiff;*.mid;*.midi;*.rmi;*.mkv;*.WAV;*.AAC;*.WMA;*.WMV;*.AVI;*.MPG;*.MPEG;*.M1V;*.MP2;*.MP3;*.MPA;*.MPE;*.M3U;*.MP4;*.MOV;*.3G2;*.3GP2;*.3GP;*.3GPP;*.M4A;*.CDA;*.AIF;*.AIFC;*.AIFF;*.MID;*.MIDI;*.RMI;*.MKV";
             if(openFileDialog.ShowDialog() == true)
             {
                 txt_filename.Text = openFileDialog.SafeFileName;
-                //txt_path.Text = openFileDialog.FileName;
+                //FOR FULL PATH USE THIS SHIT <openFileDialog.FileName>;
             }
         }
 
         private void listbox_card_video_Drop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            var path = files[0];
+            var dirName = System.IO.Path.GetFileName(path);
             if (files != null && files.Length != 0)
             {
-                txt_filename.Text = "video_"+(vList.Count + 1).ToString();
+                txt_filename.Text = dirName;
                 //txt_path.Text = files[0];
                 popup_message.IsOpen = true;
             }
@@ -72,16 +75,16 @@ namespace vlapp
 
         private void btn_cancel_Click(object sender, RoutedEventArgs e)
         {
-            txt_filename.Text = "";
-            btn_save.Content = "Save";
-            btn_delete.Visibility = Visibility.Collapsed;
+            cleanModalUncheckAllandRefresh();
+            //txt_filename.Text = "";
+            //btn_save.Content = "Save";
+            //btn_delete.Visibility = Visibility.Collapsed;
 
-            updateIsClicked = false;
-            //txt_path.Text = "";
-            popup_message.IsOpen = false;
-            refreshModal();
-            unCheckAll();
-            checkBoxStatus();
+            //updateIsClicked = false;
+            //popup_message.IsOpen = false;
+            //refreshModal();
+            //unCheckAll();
+            //checkBoxStatus();
 
 
         }
@@ -196,16 +199,16 @@ namespace vlapp
                                 }
                                 //LAGE ME KENI ITANG VIDEO
 
-
                                 DataContext = db.getSchedule();
                                 this.listbox_card_video.Items.Refresh();
-                                btn_delete.Visibility = Visibility.Collapsed;
-                                txt_filename.Text = "";
-                                popup_message.IsOpen = false;
-                                updateIsClicked = false;
-                                refreshModal();
+                                cleanModalUncheckAllandRefresh();
+                                //btn_delete.Visibility = Visibility.Collapsed;
+                                //txt_filename.Text = "";
+                                //popup_message.IsOpen = false;
+                                //updateIsClicked = false;
+                                //refreshModal();
 
-                                }
+                            }
                                 else
                                 {
                                     long schedLastId = db.saveSchedule(txt_filename.Text, getTimestampDate((DateTime)date_fromDate.SelectedDate), getTimestampDate((DateTime)date_toDate.SelectedDate));
@@ -241,16 +244,18 @@ namespace vlapp
                                                 break;
                                         }
                                     }
-                                    //LAGE ME KENI ITANG VIDEO
+                                //LAGE ME KENI ITANG VIDEO
 
-                                    DataContext = db.getSchedule();
-                                    this.listbox_card_video.Items.Refresh();
-                                    txt_filename.Text = "";
-                                    popup_message.IsOpen = false;
-                                    updateIsClicked = false;
-                                    btn_delete.Visibility = Visibility.Collapsed;
-                                    refreshModal();
-                                }
+                                
+                                DataContext = db.getSchedule();
+                                this.listbox_card_video.Items.Refresh();
+                                cleanModalUncheckAllandRefresh();
+                                //txt_filename.Text = "";
+                                //popup_message.IsOpen = false;
+                                //updateIsClicked = false;
+                                //btn_delete.Visibility = Visibility.Collapsed;
+                                //refreshModal();
+                            }
                                
 
                             }
@@ -269,7 +274,7 @@ namespace vlapp
                 }
                 else
                 {
-                    MessageBox.Show("Please fill in video name");
+                    MessageBox.Show("Please attached a video");
                 }
             
   
@@ -1100,6 +1105,19 @@ namespace vlapp
 
         }
 
+        private void cleanModalUncheckAllandRefresh()
+        {
+            txt_filename.Text = "";
+            btn_save.Content = "Save";
+            btn_delete.Visibility = Visibility.Collapsed;
+
+            updateIsClicked = false;
+            popup_message.IsOpen = false;
+            refreshModal();
+            unCheckAll();
+            checkBoxStatus();
+        }
+
         private void btn_delete_Click(object sender, RoutedEventArgs e)
         {
             MessageBoxResult dialogResult = MessageBox.Show("You are about to delete " +element.title+".", "Are you sure?", MessageBoxButton.YesNo);
@@ -1108,12 +1126,11 @@ namespace vlapp
                 Database_Functions db = new Database_Functions();
                 db.deleteSched(element.id);
                 db.deleteDays(element.id);
+
+
                 DataContext = db.getSchedule();
                 this.listbox_card_video.Items.Refresh();
-                txt_filename.Text = "";
-                popup_message.IsOpen = false;
-                updateIsClicked = false;
-                refreshModal();
+                cleanModalUncheckAllandRefresh();
 
             }
             else if (dialogResult == MessageBoxResult.No)

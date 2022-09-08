@@ -127,7 +127,6 @@ namespace vlapp
             //DataContext = blindList;
             this.listbox_arrange_ip.Items.Refresh();
 
-
         }
     }
 }

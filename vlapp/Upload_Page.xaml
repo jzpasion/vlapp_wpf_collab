@@ -24,6 +24,7 @@
                             FontSize="19"
                             Width="340"
                             Margin="15"
+                            Focusable="False"
                             materialDesign:HintAssist.Hint="Name" />
                             <Button x:Name="btn_file_open"  Margin="10" Style="{StaticResource MaterialDesignFloatingActionButton}" BorderBrush="Transparent" Background="Transparent" 
                                     Height="20" Width="20" HorizontalAlignment="Right" Click="btn_file_open_Click" >
