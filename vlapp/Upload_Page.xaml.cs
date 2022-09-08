@@ -28,6 +28,7 @@ namespace vlapp
         ObservableCollection<VideoListItem> vList = new ObservableCollection<VideoListItem>();
         List<TimeListItem> tempTimeList = new List<TimeListItem>();
         VideoListItem? element;
+        string[] fileExtension = { ".wav", ".aac", ".wma", ".wmv", ".avi", ".mpg", ".mpeg", ".m1v", ".mp2", ".mp3", ".mpa", ".mpe", ".m3u", ".mp4", ".mov", ".3g2", ".3gp2", ".3gp", ".3gpp", ".m4a", ".cda", ".aif", ".aifc", ".aiff", ".mid", ".midi", ".rmi", ".mkv", ".WAV", ".AAC", ".WMA", ".WMV", ".AVI", ".MPG", ".MPEG", ".M1V", ".MP2", ".MP3", ".MPA", ".MPE", ".M3U", ".MP4", ".MOV", ".3G2", ".3GP2", ".3GP", ".3GPP", ".M4A", ".CDA", ".AIF", ".AIFC", ".AIFF", ".MID", ".MIDI", ".RMI", ".MKV" };
         bool dateCheckStatus = false;
         bool updateIsClicked = false;
         int index;
@@ -61,14 +62,30 @@ namespace vlapp
 
         private void listbox_card_video_Drop(object sender, DragEventArgs e)
         {
+            bool hasNoError = false;
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             var path = files[0];
+            var videoExtension = System.IO.Path.GetExtension(path);
             var dirName = System.IO.Path.GetFileName(path);
             if (files != null && files.Length != 0)
             {
-                txt_filename.Text = dirName;
-                //txt_path.Text = files[0];
-                popup_message.IsOpen = true;
+                for(int x= 0; x < fileExtension.Length-1; x++)
+                {
+                    if (videoExtension == fileExtension[x])
+                    {
+                        hasNoError = true;
+                    }
+                }
+                if (hasNoError)
+                {
+                    txt_filename.Text = dirName;
+                    //txt_path.Text = files[0];
+                    popup_message.IsOpen = true;
+                }
+                else
+                {
+                    MessageBox.Show("File not supported!");
+                }
             }
             
         }
