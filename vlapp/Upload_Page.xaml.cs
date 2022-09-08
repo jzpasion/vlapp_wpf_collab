@@ -248,9 +248,9 @@ namespace vlapp
                                     txt_filename.Text = "";
                                     popup_message.IsOpen = false;
                                     updateIsClicked = false;
-                                btn_delete.Visibility = Visibility.Collapsed;
-                                refreshModal();
-                            }
+                                    btn_delete.Visibility = Visibility.Collapsed;
+                                    refreshModal();
+                                }
                                
 
                             }
