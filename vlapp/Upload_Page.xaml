@@ -374,6 +374,9 @@
                         </StackPanel>
                         
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="15">
+                                <Button x:Name="btn_delete"  Style="{DynamicResource MaterialDesignFlatButton}" Margin="4" VerticalAlignment="Center" Foreground="Red" Visibility="Collapsed" Click="btn_delete_Click">
+                                    Delete
+                                </Button>
                                 <Button x:Name="btn_cancel" Style="{DynamicResource MaterialDesignFlatButton}" Margin="4" VerticalAlignment="Center" Click="btn_cancel_Click">
                                     Cancel
                                 </Button>

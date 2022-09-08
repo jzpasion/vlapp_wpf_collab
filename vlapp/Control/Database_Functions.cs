@@ -566,7 +566,26 @@ namespace vlapp.Control
             }
         }
 
-        public string deleteDays(int day , int sched_id)
+        public string deleteSched(int sched_id)
+        {
+            string tbl = "tbl_schedule";
+            string[] fCondition = { "id" };
+            string[] vCondition = { sched_id.ToString() };
+
+            return deleteData(tbl, fCondition, vCondition);
+
+        }
+
+        public string deleteDays( int sched_id)
+        {
+            string tbl = "tbl_time";
+            string[] fCondition = { "schedule_id" };
+            string[] vCondition = { sched_id.ToString()};
+
+            return deleteData(tbl, fCondition, vCondition);
+
+        }
+            public string deleteDays(int day , int sched_id)
         {
             string tbl = "tbl_time";
             string[] fCondition = { "schedule_id" , "day" };

@@ -74,6 +74,7 @@ namespace vlapp
         {
             txt_filename.Text = "";
             btn_save.Content = "Save";
+            btn_delete.Visibility = Visibility.Collapsed;
 
             updateIsClicked = false;
             //txt_path.Text = "";
@@ -193,10 +194,12 @@ namespace vlapp
                                 {
                                     db.deleteDays(7, element.id);
                                 }
+                                //LAGE ME KENI ITANG VIDEO
 
 
                                 DataContext = db.getSchedule();
                                 this.listbox_card_video.Items.Refresh();
+                                btn_delete.Visibility = Visibility.Collapsed;
                                 txt_filename.Text = "";
                                 popup_message.IsOpen = false;
                                 updateIsClicked = false;
@@ -238,12 +241,15 @@ namespace vlapp
                                                 break;
                                         }
                                     }
+                                    //LAGE ME KENI ITANG VIDEO
+
                                     DataContext = db.getSchedule();
                                     this.listbox_card_video.Items.Refresh();
                                     txt_filename.Text = "";
                                     popup_message.IsOpen = false;
                                     updateIsClicked = false;
-                                    refreshModal();
+                                btn_delete.Visibility = Visibility.Collapsed;
+                                refreshModal();
                             }
                                
 
@@ -895,6 +901,7 @@ namespace vlapp
         {
             updateIsClicked = true;
             btn_save.Content = "Update";
+            btn_delete.Visibility = Visibility.Visible;
 
             Button? btn = sender as Button;
 
@@ -1091,6 +1098,28 @@ namespace vlapp
             time_fromTime_sunday.SelectedTime = null;
             time_toTime_sunday.SelectedTime = null;
 
+        }
+
+        private void btn_delete_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult dialogResult = MessageBox.Show("You are about to delete " +element.title+".", "Are you sure?", MessageBoxButton.YesNo);
+            if (dialogResult == MessageBoxResult.Yes)
+            {
+                Database_Functions db = new Database_Functions();
+                db.deleteSched(element.id);
+                db.deleteDays(element.id);
+                DataContext = db.getSchedule();
+                this.listbox_card_video.Items.Refresh();
+                txt_filename.Text = "";
+                popup_message.IsOpen = false;
+                updateIsClicked = false;
+                refreshModal();
+
+            }
+            else if (dialogResult == MessageBoxResult.No)
+            {
+                //do nothing
+            }
         }
     }
 }
